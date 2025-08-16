@@ -17,6 +17,12 @@ entity A2600_top is
     reset       : in std_logic; -- S2 button
     user        : in std_logic; -- S1 button
     leds_n      : out std_logic_vector(1 downto 0);
+    -- onboard USB-C Tang BL616 UART
+    uart_rx     : in std_logic;
+    uart_tx     : out std_logic;
+    -- monitor port
+    bl616_mon_tx : out std_logic;
+    bl616_mon_rx : in std_logic;
     -- SPI interface Sipeed M0S Dock external BL616 uC
     m0s         : inout std_logic_vector(4 downto 0);
     -- SPI connection to onboard BL616
@@ -302,6 +308,9 @@ begin
 
 pwr_sav <= '1';
 
+  -- BL616 console to hw pins for external USB-UART adapter
+  uart_tx <= bl616_mon_rx;
+  bl616_mon_tx <= uart_rx;
 -- ----------------- SPI input parser ----------------------
 
 -- by default the internal SPI is being used. Once there is
