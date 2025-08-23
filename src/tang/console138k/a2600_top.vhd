@@ -953,7 +953,7 @@ module_inst: entity work.sysctrl
   int_in              => unsigned'("0000" & sdc_int & '0' & hid_int & '0'),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(not reset & not user), -- S0 and S1 button
+  buttons             => unsigned'(not user & not reset), -- S0 and S1 button
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );
