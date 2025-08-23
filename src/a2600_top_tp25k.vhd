@@ -110,7 +110,6 @@ signal mouse_x        : signed(7 downto 0);
 signal mouse_y        : signed(7 downto 0);
 signal mouse_strobe   : std_logic;
 signal osd_status     : std_logic;
-signal ws2812_color   : std_logic_vector(23 downto 0);
 signal system_reset   : std_logic_vector(1 downto 0);
 signal sd_img_size    : std_logic_vector(31 downto 0);
 signal sd_img_size_d  : std_logic_vector(31 downto 0);
@@ -138,7 +137,6 @@ signal spi_io_clk     : std_logic;
 signal spi_io_dout    : std_logic;
 signal system_wide_screen : std_logic;
 signal leds           : std_logic_vector(5 downto 0);
-signal system_leds    : std_logic_vector(1 downto 0);
 signal db9_joy        : std_logic_vector(5 downto 0);
 signal hblank          : std_logic;
 signal vblank          : std_logic;
@@ -765,12 +763,12 @@ module_inst: entity work.sysctrl
   port_in_data        => open,
 
   int_out_n           => m0s(4),
-  int_in              => unsigned'("0000" & sdc_int & '0' & hid_int & '0'),
+  int_in              => unsigned'(x"0" & sdc_int & '0' & hid_int & '0'),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(not reset & not user), -- S0 and S1 button
-  leds                => system_leds, -- two leds can be controlled from the MCU
-  color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
+  buttons             => unsigned'(user & reset), -- S2 and S1 buttons
+  leds                => open,
+  color               => open
 );
 
 sd_rd(4) <= '0';
