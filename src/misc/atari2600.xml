@@ -79,7 +79,7 @@
  <listentry label="DS #2 Paddle" value="10"/>
  <listentry label="Off" value="11"/>
       </list>
-      <list label="Swap Joyst:" id="&" default="0">
+      <list label="Swap Joyst:" id="&amp;" default="0">
  <listentry label="Off" value="0"/>
  <listentry label="On" value="1"/>
       </list>
@@ -103,7 +103,7 @@
  <listentry label="Original" value="0"/>
  <listentry label="Regenerate" value="1"/>
       </list>
-       <list label="Black&White:" id="O" default="1">
+       <list label="Black&amp;White:" id="O" default="1">
  <listentry label="Mono" value="0"/>
  <listentry label="Color" value="1"/>
       </list>
