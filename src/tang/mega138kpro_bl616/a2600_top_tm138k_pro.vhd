@@ -497,8 +497,7 @@ mainclock: entity work.Gowin_PLL_ntsc_138k_pro
     port map (
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
-      clkin   => clk_50mhz,
-      init_clk => clk_50mhz
+      clkin   => clk_50mhz
     );
 
 div1_inst: CLKDIV
