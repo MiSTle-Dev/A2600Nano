@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------
---  A2600 Top level for Tang Primer 20k
---  2024 Stefan Voss
+--  A2600 Top level for Tang Primer 20k HDMI
+--  2024/2025 Stefan Voss
 --  based on the work of many others
 --
 -------------------------------------------------------------------------
@@ -10,37 +10,40 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.numeric_std.ALL;
 
 entity A2600_top is
-  generic
-  (
-   ESP32PRG  : integer := 0 -- 0:no, 1:yes special ESP32 Programmer
-   );
   port
   (
+--  reconfig_n  : out std_logic; 
     clk_27mhz   : in std_logic; -- 27 Mhz XO
     reset       : in std_logic; -- S2 button
     user        : in std_logic; -- S1 button
     leds_n      : out std_logic_vector(5 downto 0);
     io          : in std_logic_vector(5 downto 0);
-
-    -- SPI interface Sipeed M0S Dock external BL616 uC
-    m0s         : inout std_logic_vector(6 downto 0); 
-    -- m0s(6),(5), reconfig_n and mspi_ special configuration !
-    reconfig_n  : out std_logic; 
-    mspi_cs     : out std_logic;
-    mspi_clk    : out std_logic;
-    mspi_do     : in std_logic;
-    mspi_di     : out std_logic;
-    --
+    -- SPI interface external uC
+    m0s         : inout std_logic_vector(4 downto 0);
+    -- HDMI
     tmds_clk_n  : out std_logic;
     tmds_clk_p  : out std_logic;
     tmds_d_n    : out std_logic_vector( 2 downto 0);
     tmds_d_p    : out std_logic_vector( 2 downto 0);
+    -- internal lcd
+    --lcd_dclk    : out std_logic; -- lcd is RGB 565
+    --lcd_hs      : out std_logic; -- lcd horizontal synchronization
+    --lcd_vs      : out std_logic; -- lcd vertical synchronization        
+    --lcd_de      : out std_logic; -- lcd data enable     
+    --lcd_bl      : out std_logic; -- lcd backlight control
+    --lcd_r       : out std_logic_vector(4 downto 0);  -- lcd red
+    --lcd_g       : out std_logic_vector(5 downto 0);  -- lcd green
+    --lcd_b       : out std_logic_vector(4 downto 0);  -- lcd blue
+    -- audio
+    hp_bck      : out std_logic;
+    hp_ws       : out std_logic;
+    hp_din      : out std_logic;
+    pa_en       : out std_logic;
     -- sd interface
     sd_clk      : out std_logic;
     sd_cmd      : inout std_logic;
     sd_dat      : inout std_logic_vector(3 downto 0);
     ws2812      : out std_logic;
-
     -- Gamepad Dualshock P1
     ds_clk          : out std_logic;
     ds_mosi         : out std_logic;
@@ -277,6 +280,7 @@ signal btn_b_w          : std_logic;
 signal btn_diff_l       : std_logic;
 signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
+signal int_out_n        : std_logic;
 
 component CLKDIV
     generic (
@@ -340,18 +344,8 @@ begin
   spi_io_din  <= m0s(1);
   spi_io_ss   <= m0s(2);
   spi_io_clk  <= m0s(3);
-
-no_esp32prg: if ESP32PRG = 0 generate
-  m0s(0)      <= spi_io_dout; -- M0 Dock
-end generate;
-
-yes_esp32prg: if ESP32PRG /= 0 generate
-  mspi_clk <= m0s(3);
-  mspi_di  <= m0s(1);
-  mspi_cs  <= m0s(5);
-  m0s(0)   <= spi_io_dout when spi_io_ss = '0' else mspi_do;
-  reconfig_n <= m0s(6);
-end generate;
+  m0s(0)      <= spi_io_dout;
+  m0s(4)      <= int_out_n;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -477,25 +471,31 @@ generic map (
 );
 
 video_inst: entity work.video 
+      generic map
+      (
+        STEREO  => true
+      )
 port map(
-      pll_lock     => pll_locked, 
-      clk          => clk,
+      pll_lock => pll_locked, 
+      clk      => clk,
       clk_pixel_x5 => clk_pixel_x5,
+      ntscmode => '1',
 
-      vb_in     => vblank,
-      hb_in     => hblank,
-      hs_in_n   => not hsync,
-      vs_in_n   => not vsync,
+      vb_in    => vblank,
+      hb_in    => hblank,
+      hs_in_n  => not hsync,
+      vs_in_n  => not vsync,
 
-      r_in      => video_r(7 downto 4),
-      g_in      => video_g(7 downto 4),
-      b_in      => video_b(7 downto 4),
-      audio_l => signed("0" & audio0 & "0000000000"),
-      audio_r => signed("0" & audio1 & "0000000000"),
-      osd_status => osd_status,
+      r_in     => video_r(7 downto 4),
+      g_in     => video_g(7 downto 4),
+      b_in     => video_b(7 downto 4),
+      
+      audio_l  => signed("0" & audio0 & "0000000000"),
+      audio_r  => signed("0" & audio1 & "0000000000"),
+      osd_status => open,
       vblank_regenerate => vblank_regen,
-      paldetect  => paldetect,
-      mcu_start  => mcu_start,
+      paldetect => paldetect,
+      mcu_start => mcu_start,
       mcu_osd_strobe => mcu_osd_strobe,
       mcu_data  => mcu_data_out,
 
@@ -507,7 +507,12 @@ port map(
       tmds_clk_n => tmds_clk_n,
       tmds_clk_p => tmds_clk_p,
       tmds_d_n   => tmds_d_n,
-      tmds_d_p   => tmds_d_p
+      tmds_d_p   => tmds_d_p,
+
+      hp_bck   => hp_bck,
+      hp_ws    => hp_ws,
+      hp_din   => hp_din,
+      pa_en    => pa_en
       );
 
 -- target
@@ -1003,11 +1008,11 @@ module_inst: entity work.sysctrl
   port_in_strobe      => open,
   port_in_data        => open,
 
-  int_out_n           => m0s(4),
-  int_in              => std_logic_vector(unsigned'("0000" & sdc_int & '0' & hid_int & '0')),
+  int_out_n           => int_out_n,
+  int_in              => std_logic_vector(unsigned'(x"0" & sdc_int & '0' & hid_int & '0')),
   int_ack             => int_ack,
 
-  buttons             => std_logic_vector(unsigned'(reset & user)), -- S0 and S1 buttons on Tang Nano 20k
+  buttons             => std_logic_vector(unsigned'(not user & not reset)), -- S0 and S1 buttons
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );

@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------
---  A2600 Top level for Tang Primer 20k LCD
---  2024 Stefan Voss
+--  A2600 Top level for Tang Primer 20k LCD + HDMI
+--  2024/2025 Stefan Voss
 --  based on the work of many others
 --
 -------------------------------------------------------------------------
@@ -10,24 +10,20 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.numeric_std.ALL;
 
 entity A2600_top is
-  generic
-  (
-   ESP32PRG  : integer := 0 -- 0:no, 1:yes special ESP32 Programmer
-   );
   port
   (
+--  reconfig_n  : out std_logic; 
     clk_27mhz   : in std_logic; -- 27 Mhz XO
     reset       : in std_logic; -- S2 button
     user        : in std_logic; -- S1 button
     leds_n      : out std_logic_vector(5 downto 0);
-    -- SPI interface Sipeed M0S Dock external BL616 uC
-    m0s         : inout std_logic_vector(6 downto 0);
-    -- m0s(6),(5), reconfig_n and mspi_ special configuration !
-    reconfig_n  : out std_logic; 
-    mspi_cs     : out std_logic;
-    mspi_clk    : out std_logic;
-    mspi_do     : in std_logic := '0';
-    mspi_di     : out std_logic;
+    -- SPI interface external uC
+    m0s         : inout std_logic_vector(4 downto 0);
+    -- HDMI
+    tmds_clk_n  : out std_logic;
+    tmds_clk_p  : out std_logic;
+    tmds_d_n    : out std_logic_vector( 2 downto 0);
+    tmds_d_p    : out std_logic_vector( 2 downto 0);
     -- internal lcd
     lcd_dclk    : out std_logic; -- lcd is RGB 565
     lcd_hs      : out std_logic; -- lcd horizontal synchronization
@@ -267,8 +263,6 @@ signal paddle_1_analogA : std_logic := '0';
 signal paddle_1_analogB : std_logic := '0';
 signal paddle_2_analogA : std_logic := '0';
 signal paddle_2_analogB : std_logic := '0';
-signal lcd_r_i         : std_logic_vector(5 downto 0);
-signal lcd_b_i         : std_logic_vector(5 downto 0);
 signal ds_cs           : std_logic;
 signal ds_clk          : std_logic;
 signal ds_mosi         : std_logic;
@@ -284,6 +278,7 @@ signal btn_b_w          : std_logic;
 signal btn_diff_l       : std_logic;
 signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
+signal int_out_n        : std_logic;
 
 component CLKDIV
     generic (
@@ -343,22 +338,11 @@ port (
 end component;
 
 begin
-
   spi_io_din  <= m0s(1);
   spi_io_ss   <= m0s(2);
   spi_io_clk  <= m0s(3);
-
-no_esp32prg: if ESP32PRG = 0 generate
-  m0s(0)      <= spi_io_dout; -- M0 Dock
-end generate;
-
-yes_esp32prg: if ESP32PRG /= 0 generate
-  mspi_clk <= m0s(3);
-  mspi_di  <= m0s(1);
-  mspi_cs  <= m0s(5);
-  m0s(0)   <= spi_io_dout when spi_io_ss = '0' else mspi_do;
-  reconfig_n <= m0s(6);
-end generate;
+  m0s(0)      <= spi_io_dout;
+  m0s(4)      <= int_out_n;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -483,9 +467,6 @@ generic map (
     outbyte         => sd_rd_data         -- a byte of sector content
 );
 
-lcd_r <= lcd_r_i(5 downto 1);
-lcd_b <= lcd_b_i(5 downto 1);
-
 video_inst: entity work.video 
       generic map
       (
@@ -494,6 +475,7 @@ video_inst: entity work.video
 port map(
       pll_lock => pll_locked, 
       clk      => clk,
+      clk_pixel_x5 => clk_pixel_x5,
       ntscmode => '1',
 
       vb_in    => vblank,
@@ -519,13 +501,17 @@ port map(
       system_scanlines => system_scanlines,
       system_volume => system_volume,
 
+      tmds_clk_n => tmds_clk_n,
+      tmds_clk_p => tmds_clk_p,
+      tmds_d_n   => tmds_d_n,
+      tmds_d_p   => tmds_d_p,
       lcd_clk  => lcd_dclk,
       lcd_hs_n => lcd_hs,
       lcd_vs_n => lcd_vs,
       lcd_de   => lcd_de,
-      lcd_r    => lcd_r_i,
-      lcd_g    => lcd_g,
-      lcd_b    => lcd_b_i,
+      lcd_r(7 downto 3) => lcd_r,
+      lcd_g(7 downto 2) => lcd_g,
+      lcd_b(7 downto 3) => lcd_b,
       lcd_bl   => lcd_bl,
 
       hp_bck   => hp_bck,
@@ -1027,11 +1013,11 @@ module_inst: entity work.sysctrl
   port_in_strobe      => open,
   port_in_data        => open,
 
-  int_out_n           => m0s(4),
-  int_in              => std_logic_vector(unsigned'("0000" & sdc_int & '0' & hid_int & '0')),
+  int_out_n           => int_out_n,
+  int_in              => std_logic_vector(unsigned'(x"0" & sdc_int & '0' & hid_int & '0')),
   int_ack             => int_ack,
 
-  buttons             => std_logic_vector(unsigned'(reset & user)), -- S0 and S1 buttons on Tang Nano 20k
+  buttons             => std_logic_vector(unsigned'(not user & not reset)), -- S0 and S1 buttons
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );
