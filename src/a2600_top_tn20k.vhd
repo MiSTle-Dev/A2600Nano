@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------
 --  A2600 Top level for Tang Nano 20k
---  2024 Stefan Voss
+--  2024...2026 Stefan Voss
 --  based on the work of many others
 --
 -------------------------------------------------------------------------
@@ -12,17 +12,31 @@ use IEEE.numeric_std.ALL;
 entity A2600_top is
   port
   (
+    --bl616_jtagsel : in std_logic;
+    --jtagseln    : out std_logic := '0';
+    reconfign   : out std_logic := 'Z';
     clk_27mhz   : in std_logic; -- 27 Mhz XO
-    --clk_0       : in std_logic; -- Mhz PLL
-    --clk_1       : in std_logic; -- Mhz PLL
-    --clk_2       : in std_logic; -- Mhz PLL
-    reset       : in std_logic; -- S2 button
-    user        : in std_logic; -- S1 button
+    key_reset : in std_logic; -- S2 button
+    key_user  : in std_logic; -- S1 button
     leds_n      : out std_logic_vector(5 downto 0);
     io          : in std_logic_vector(5 downto 0);
-
-    -- SPI interface Sipeed M0S Dock external BL616 uC
-    m0s         : inout std_logic_vector(4 downto 0);
+    -- onboard USB-C Tang BL616 UART
+    uart_rx     : in std_logic; 
+  --uart_tx     : out std_logic;
+    -- monitor port
+    bl616_mon_tx : out std_logic;
+    -- SPI interface external uC
+    pmod_companion_din : in std_logic;
+    pmod_companion_dout : out std_logic;
+    pmod_companion_ss : in std_logic;
+    pmod_companion_clk : in std_logic;
+    pmod_companion_intn : out std_logic;
+    -- SPI connection to onboard BL616
+    spi_sclk    : in std_logic;
+    spi_csn     : in std_logic;
+    spi_dir     : out std_logic;
+    spi_dat     : in std_logic;
+    spi_irqn    : out std_logic;
     --
     tmds_clk_n  : out std_logic;
     tmds_clk_p  : out std_logic;
@@ -60,7 +74,6 @@ attribute syn_keep of clk_cpu      : signal is 1;
 attribute syn_keep of clk          : signal is 1;
 attribute syn_keep of clk_14       : signal is 1;
 attribute syn_keep of clk_pixel_x5 : signal is 1;
-attribute syn_keep of m0s          : signal is 1;
 
   -- keyboard
 signal keyboard_matrix_out : std_logic_vector(7 downto 0);
@@ -271,6 +284,7 @@ signal btn_b_w          : std_logic;
 signal btn_diff_l       : std_logic;
 signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
+signal spi_intn         : std_logic;
 
 component CLKDIV
     generic (
@@ -330,15 +344,29 @@ component rPLL
 end component;
 
 begin
--- ----------------- SPI input parser ----------------------
--- map output data onto both spi outputs
-  spi_io_din  <= m0s(1);
-  spi_io_ss   <= m0s(2);
-  spi_io_clk  <= m0s(3);
-  m0s(0)      <= spi_io_dout; -- M0 Dock
 
--- https://store.curiousinventor.com/guides/PS2/
--- https://hackaday.io/project/170365-blueretro/log/186471-playstation-playstation-2-spi-interface
+  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
+  -- BL616 console to hw pins for external USB-UART adapter
+  bl616_mon_tx <= uart_rx;
+
+  process (clk)
+  begin
+    if rising_edge(clk) then
+      if pll_locked = '0' then
+        spi_ext <= '0';
+      elsif pmod_companion_ss = '0' then
+        spi_ext <= '1';
+      end if;
+    end if;
+  end process;
+
+  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
+  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+  spi_dir <= spi_io_dout;
+  spi_irqn <= spi_intn;
+  pmod_companion_dout <= spi_io_dout;
+  pmod_companion_intn <= spi_intn;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -995,11 +1023,11 @@ module_inst: entity work.sysctrl
   port_in_strobe      => open,
   port_in_data        => open,
 
-  int_out_n           => m0s(4),
+  int_out_n           => spi_intn,
   int_in              => std_logic_vector(unsigned'("0000" & sdc_int & '0' & hid_int & '0')),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(user & reset), -- S0 and S1 buttons on Tang Nano 20k
+  buttons             => unsigned'(key_user & key_reset), -- S2 and S1 buttons
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );
