@@ -41,7 +41,9 @@ add_file src/tang/console60k/a2600_top_tc60k.vhd
 add_file src/tang/console60k/a2600_top_tc60k.cst
 add_file src/tang/console60k/a2600_top_tc60k.sdc
 add_file src/video_stabilize.sv
+add_file src/gowin_pll/pll_init.v
 add_file src/gowin_pll/gowin_pll_ntsc_60k.vhd
+add_file src/gowin_pll/gowin_pll_ntsc_60k_mod.vhd
 add_file src/detect2600.sv
 add_file src/dualshock2.v
 
@@ -57,7 +59,7 @@ set_option -use_cpu_as_gpio 1
 set_option -use_ready_as_gpio 1
 set_option -use_sspi_as_gpio 1
 set_option -use_i2c_as_gpio 1
-set_option -use_jtag_as_gpio 0
+set_option -use_jtag_as_gpio 1
 set_option -print_all_synthesis_warning 0
 set_option -show_all_warn 1
 set_option -rw_check_on_ram 0
