@@ -10,20 +10,27 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.numeric_std.ALL;
 
-entity A2600_top_tp25k is
+entity A2600_top is
   port
   (
+    bl616_jtagsel : in std_logic;
+    jtagseln    : out std_logic;
+    reconfign   : out std_logic := 'Z';
     clk_50mhz   : in std_logic; -- 27 Mhz XO
-    reset       : in std_logic; -- S2 button
-    user        : in std_logic; -- S1 button
+    key_reset   : in std_logic; -- S2 button high active
+    key_user    : in std_logic; -- S1 button high active
     leds_n      : out std_logic_vector(1 downto 0);
     -- onboard USB-C Tang BL616 UART
-    uart_rx     : in std_logic;
-  --uart_tx     : out std_logic;
-    bl616_mon_tx: out std_logic;
-  --bl616_mon_rx: in std_logic;
-    -- SPI interface Sipeed M0S Dock external BL616 uC
-    m0s         : inout std_logic_vector(4 downto 0);
+    --uart_rx     : in std_logic;
+    --uart_tx     : out std_logic;
+    --bl616_mon_tx: out std_logic;
+    --bl616_mon_rx: in std_logic;
+    -- SPI interface external uC
+    pmod_companion_din : in std_logic;
+    pmod_companion_dout : out std_logic;
+    pmod_companion_ss : in std_logic;
+    pmod_companion_clk : in std_logic;
+    pmod_companion_intn : out std_logic;
     -- SPI connection to onboard BL616
     spi_sclk    : in std_logic;
     spi_csn     : in std_logic;
@@ -44,7 +51,7 @@ entity A2600_top_tp25k is
     );
 end;
 
-architecture Behavioral_top of A2600_top_tp25k is
+architecture Behavioral_top of A2600_top is
 
 signal clk            : std_logic;
 signal clk_cpu        : std_logic;
@@ -56,7 +63,6 @@ attribute syn_keep of clk_cpu      : signal is 1;
 attribute syn_keep of clk          : signal is 1;
 attribute syn_keep of clk_14       : signal is 1;
 attribute syn_keep of clk_pixel_x5 : signal is 1;
-attribute syn_keep of m0s          : signal is 1;
 
   -- keyboard
 signal keyboard_matrix_out : std_logic_vector(7 downto 0);
@@ -229,6 +235,9 @@ signal btn_b_w          : std_logic;
 signal btn_diff_l       : std_logic;
 signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
+signal spi_intn         : std_logic;
+signal boot_button_detected : std_logic := '1';
+
 
 component CLKDIV
     generic (
@@ -243,39 +252,39 @@ component CLKDIV
 end component;
 
 begin
-
---uart_tx <= bl616_mon_rx;
-  bl616_mon_tx <= uart_rx;
-
   O_sdram_cs_n <= '1';
   
--- ----------------- SPI input parser ----------------------
--- by default the internal SPI is being used. Once there is
--- a select from the external spi (M0S Dock) , then the connection is being switched
-process (clk, pll_locked)
-begin
-  if pll_locked = '0' then
-    spi_ext <= '0';
-    m0s(3 downto 1 ) <= (others => 'Z');
-    elsif rising_edge(clk) then
-    spi_ext <= spi_ext;
-    if m0s(2) = '0' then
-        spi_ext <= '1';
+
+  process (pll_locked)
+  begin
+    if rising_edge(pll_locked) then
+      boot_button_detected <= '1' when key_user = '1' or key_reset = '1' else '0';
     end if;
-  end if;
-end process;
+  end process;
 
-  -- map output data onto both spi outputs
-  spi_io_din  <= m0s(1) when spi_ext = '1' else spi_dat;
-  spi_io_ss   <= m0s(2) when spi_ext = '1' else spi_csn;
-  spi_io_clk  <= m0s(3) when spi_ext = '1' else spi_sclk;
+-- enable JTAG if any button has been pressed during boot and also once
+-- the external FPGA Companion has been seen
+  jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
+  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
 
-  -- onboard BL616
-  spi_dir     <= spi_io_dout;
-  spi_irqn    <= int_out_n;
-  -- external M0S Dock BL616 / PiPico  / ESP32
-  m0s(0)      <= spi_io_dout;
-  m0s(4)      <= int_out_n;
+  process (clk)
+  begin
+    if rising_edge(clk) then
+      if pll_locked = '0' then
+        spi_ext <= '0';
+      elsif pmod_companion_ss = '0' then
+        spi_ext <= '1';
+      end if;
+    end if;
+  end process;
+
+  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
+  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+  spi_dir <= spi_io_dout;
+  spi_irqn <= spi_intn;
+  pmod_companion_dout <= spi_io_dout;
+  pmod_companion_intn <= spi_intn;
 
 sdc_iack <= int_ack(3);
 
@@ -369,7 +378,8 @@ mainclock: entity work.Gowin_PLL_ntsc
     port map (
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
-      clkin   => clk_50mhz
+      clkin   => clk_50mhz,
+      mdclk => clk_50mhz
     );
 
 div1_inst: CLKDIV
@@ -798,11 +808,11 @@ module_inst: entity work.sysctrl
   port_in_strobe      => open,
   port_in_data        => open,
 
-  int_out_n           => int_out_n,
+  int_out_n           => spi_intn,
   int_in              => unsigned'(x"0" & sdc_int & '0' & hid_int & '0'),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(user & reset), -- S2 and S1 buttons
+  buttons             => unsigned'(key_user & key_reset), -- S2 and S1 buttons
   leds                => open,
   color               => open
 );

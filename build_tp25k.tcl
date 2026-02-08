@@ -37,18 +37,20 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb_gw5a.vhd
-add_file src/a2600_top_tp25k.vhd
-add_file src/a2600_top_tp25k.cst
-add_file src/a2600_top_tp25k.sdc
+add_file src/tang/primer25k/a2600_top_tp25k.vhd
+add_file src/tang/primer25k/a2600_top_tp25k.cst
+add_file src/tang/primer25k/a2600_top_tp25k.sdc
 add_file src/video_stabilize.sv
-add_file src/gowin_pll/gowin_pll_ntsc.vhd
+add_file src/tang/primer25k/gowin_pll_ntsc.vhd
+add_file src/tang/primer25k/gowin_pll_ntsc_mod.vhd
+add_file src/tang/primer25k/pll_init.v
 add_file src/detect2600.sv
 
 set_option -synthesis_tool gowinsynthesis
 set_option -output_base_name a2600nano_tp25k
 set_option -verilog_std sysv2017
 set_option -vhdl_std vhd2008
-set_option -top_module A2600_top_tp25k
+set_option -top_module A2600_top
 set_option -use_mspi_as_gpio 1
 set_option -use_sspi_as_gpio 1
 set_option -use_done_as_gpio 1
@@ -56,11 +58,11 @@ set_option -use_cpu_as_gpio 1
 set_option -use_i2c_as_gpio 1
 set_option -use_ready_as_gpio 1
 set_option -use_jtag_as_gpio 1
-set_option -print_all_synthesis_warning 1
 set_option -rw_check_on_ram 0
 set_option -user_code 00000001
 set_option -bit_security 0
 set_option -bit_compress 1
+set_option -loading_rate 70.000
 
 #run syn
 run all
