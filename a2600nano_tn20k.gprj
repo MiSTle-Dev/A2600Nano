@@ -41,13 +41,13 @@
         <File path="src/TIA/TIA.vhd" type="file.vhdl" enable="1"/>
         <File path="src/TIA/VGAColorTable.vhd" type="file.vhdl" enable="1"/>
         <File path="src/TIA/audio_argh2600.vhd" type="file.vhdl" enable="1"/>
-        <File path="src/a2600_top_tn20k.vhd" type="file.vhdl" enable="1"/>
         <File path="src/gowin_sdpb/gowin_sdpb.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65_ALU.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65_MCode.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65_Pack.vhd" type="file.vhdl" enable="1"/>
-        <File path="src/a2600_top_tn20k.cst" type="file.cst" enable="1"/>
-        <File path="src/a2600_top_tn20k.sdc" type="file.sdc" enable="1"/>
+        <File path="src/tang/nano20k/a2600_top_tn20k.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/tang/nano20k/a2600_top_tn20k.cst" type="file.cst" enable="1"/>
+        <File path="src/tang/nano20k/a2600_top_tn20k.sdc" type="file.sdc" enable="1"/>
     </FileList>
 </Project>

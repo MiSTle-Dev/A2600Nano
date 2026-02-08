@@ -10,17 +10,35 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.numeric_std.ALL;
 
-entity A2600_top_tm138k_pro is
+entity A2600_top is
   port
   (
+    bl616_jtagsel : in std_logic;
+    jtagseln    : out std_logic := '0';
+    reconfign   : out std_logic := 'Z';
     clk_50mhz   : in std_logic; -- XO
-    reset       : in std_logic; -- S2 button
-    user        : in std_logic; -- S1 button
+    key_n       : in std_logic_vector(3 downto 0);
+    key_som_n   : in std_logic; -- SOM button
     leds_n      : out std_logic_vector(5 downto 0);
+    somleds_n   : out std_logic_vector(1 downto 0);
     io          : in std_logic_vector(5 downto 0);
-
-    -- SPI interface Sipeed M0S Dock external BL616 uC
-    m0s         : inout std_logic_vector(4 downto 0);
+    -- USB-C BL616 UART
+    uart_rx     : in std_logic;
+    -- monitor port
+    twimux       : out std_logic_vector(2 downto 0);
+    bl616_mon_tx : out std_logic;
+    -- SPI interface external uC
+    pmod_companion_din : in std_logic;
+    pmod_companion_dout : out std_logic;
+    pmod_companion_ss : in std_logic;
+    pmod_companion_clk : in std_logic;
+    pmod_companion_intn : out std_logic;
+    -- SPI connection to onboard BL616
+    spi_sclk    : in std_logic;
+    spi_csn     : in std_logic;
+    spi_dir     : out std_logic;
+    spi_dat     : in std_logic;
+    spi_irqn    : out std_logic;
     --
     tmds_clk_n  : out std_logic;
     tmds_clk_p  : out std_logic;
@@ -48,7 +66,7 @@ entity A2600_top_tm138k_pro is
     );
 end;
 
-architecture Behavioral_top of A2600_top_tm138k_pro is
+architecture Behavioral_top of A2600_top is
 
 signal clk            : std_logic;
 signal clk_cpu        : std_logic;
@@ -60,7 +78,6 @@ attribute syn_keep of clk_cpu      : signal is 1;
 attribute syn_keep of clk          : signal is 1;
 attribute syn_keep of clk_14       : signal is 1;
 attribute syn_keep of clk_pixel_x5 : signal is 1;
-attribute syn_keep of m0s          : signal is 1;
 
   -- keyboard
 signal keyboard_matrix_out : std_logic_vector(7 downto 0);
@@ -152,6 +169,7 @@ signal spi_io_clk     : std_logic;
 signal spi_io_dout    : std_logic;
 signal system_wide_screen : std_logic;
 signal leds           : std_logic_vector(5 downto 0);
+signal somleds        : std_logic_vector(1 downto 0);
 signal system_leds    : std_logic_vector(1 downto 0);
 signal db9_joy        : std_logic_vector(5 downto 0);
 signal hblank          : std_logic;
@@ -271,6 +289,10 @@ signal btn_b_w          : std_logic;
 signal btn_diff_l       : std_logic;
 signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
+signal spi_intn         : std_logic;
+signal boot_button_detected : std_logic := '1';
+signal key_user_n       : std_logic;
+signal key_reset_n      : std_logic;
 
 component CLKDIV
     generic (
@@ -287,16 +309,47 @@ end component;
 begin
 
   O_sdram_cs_n <= '1';
-  
--- ----------------- SPI input parser ----------------------
--- map output data onto both spi outputs
-  spi_io_din  <= m0s(1);
-  spi_io_ss   <= m0s(2);
-  spi_io_clk  <= m0s(3);
-  m0s(0)      <= spi_io_dout; -- M0 Dock
 
--- https://store.curiousinventor.com/guides/PS2/
--- https://hackaday.io/project/170365-blueretro/log/186471-playstation-playstation-2-spi-interface
+  key_reset_n <= key_n(0);
+  key_user_n <= key_n(1);
+
+  process (pll_locked)
+  begin
+    if rising_edge(pll_locked) then
+      boot_button_detected <= '1' when key_user_n = '0' or key_reset_n = '0' else '0';
+    end if;
+  end process;
+
+-- enable JTAG if any button has been pressed during boot and also once
+-- the external FPGA Companion has been seen
+  jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
+  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
+  twimux <= "100"; -- connect BL616 TWI4 PLL1
+  -- BL616 console to hw pins for external USB-UART adapter
+  bl616_mon_tx <= uart_rx;
+
+  process (clk)
+  begin
+    if rising_edge(clk) then
+      if pll_locked = '0' then
+        spi_ext <= '0';
+      elsif pmod_companion_ss = '0' then
+        spi_ext <= '1';
+      end if;
+    end if;
+  end process;
+
+  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
+  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+  spi_dir <= spi_io_dout;
+  spi_irqn <= spi_intn;
+  pmod_companion_dout <= spi_io_dout;
+  pmod_companion_intn <= spi_intn;
+
+  somleds_n <=  not somleds;
+  somleds(0) <= not jtagseln;
+  somleds(1) <= not reconfign;  
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -468,7 +521,8 @@ mainclock: entity work.Gowin_PLL_ntsc_138k_pro
     port map (
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
-      clkin   => clk_50mhz
+      clkin   => clk_50mhz,
+      init_clk => clk
     );
 
 div1_inst: CLKDIV
@@ -902,11 +956,11 @@ module_inst: entity work.sysctrl
   port_in_strobe      => open,
   port_in_data        => open,
 
-  int_out_n           => m0s(4),
-  int_in              => unsigned'("0000" & sdc_int & '0' & hid_int & '0'),
+  int_out_n           => spi_intn,
+  int_in              => unsigned'(x"0" & sdc_int & '0' & hid_int & '0'),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(not user & not reset), -- S0 and S1 button
+  buttons             => unsigned'(not key_user_n & not key_reset_n), -- S0 and S1 buttons
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );

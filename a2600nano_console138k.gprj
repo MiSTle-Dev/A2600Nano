@@ -30,6 +30,7 @@
         <File path="src/misc/sysctrl.v" type="file.verilog" enable="1"/>
         <File path="src/misc/video_analyzer.v" type="file.verilog" enable="1"/>
         <File path="src/misc/video_tc.v" type="file.verilog" enable="1"/>
+        <File path="src/tang/console138k/pll_init.v" type="file.verilog" enable="1"/>
         <File path="src/video_stabilize.sv" type="file.verilog" enable="1"/>
         <File path="src/A2601Core.vhd" type="file.vhdl" enable="1"/>
         <File path="src/A2601top.vhd" type="file.vhdl" enable="1"/>
@@ -40,13 +41,14 @@
         <File path="src/TIA/TIA.vhd" type="file.vhdl" enable="1"/>
         <File path="src/TIA/VGAColorTable.vhd" type="file.vhdl" enable="1"/>
         <File path="src/TIA/audio_argh2600.vhd" type="file.vhdl" enable="1"/>
-        <File path="src/gowin_pll/gowin_pll_ntsc_138k.vhd" type="file.vhdl" enable="1"/>
         <File path="src/gowin_sdpb/gowin_sdpb_gw5a.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65_ALU.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65_MCode.vhd" type="file.vhdl" enable="1"/>
         <File path="src/t65/T65_Pack.vhd" type="file.vhdl" enable="1"/>
         <File path="src/tang/console138k/a2600_top.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/tang/console138k/gowin_pll_ntsc_138k.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/tang/console138k/gowin_pll_ntsc_138k_mod.vhd" type="file.vhdl" enable="1"/>
         <File path="src/tang/console138k/a2600_top.cst" type="file.cst" enable="1"/>
         <File path="src/tang/console138k/a2600_top.sdc" type="file.sdc" enable="1"/>
     </FileList>
