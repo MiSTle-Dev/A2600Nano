@@ -10,7 +10,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.numeric_std.ALL;
 
-entity A2600_top_tm60k is
+entity A2600_top is
   port
   (
     clk_50mhz   : in std_logic; -- XO
@@ -59,7 +59,7 @@ entity A2600_top_tm60k is
     );
 end;
 
-architecture Behavioral_top of A2600_top_tm60k is
+architecture Behavioral_top of A2600_top is
 
 signal clk            : std_logic;
 signal clk_cpu        : std_logic;

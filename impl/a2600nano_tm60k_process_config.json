@@ -78,7 +78,7 @@
  "Show_All_Warnings" : false,
  "Synthesize_tool" : "GowinSyn",
  "TclPre" : "",
- "TopModule" : "A2600_top_tm60k",
+ "TopModule" : "A2600_top",
  "USERCODE" : "00000001",
  "Unused_Pin" : "As_input_tri_stated_with_pull_up",
  "VCC" : "0.9",

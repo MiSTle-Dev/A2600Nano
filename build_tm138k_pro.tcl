@@ -64,6 +64,7 @@ set_option -user_code 00000001
 set_option -bit_security 0
 set_option -rpt_auto_place_io_info 1
 set_option -bit_compress 1
+set_option -loading_rate 70.000
 
 #run syn
 run all
