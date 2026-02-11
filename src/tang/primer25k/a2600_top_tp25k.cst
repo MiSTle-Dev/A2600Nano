@@ -125,5 +125,3 @@ IO_PORT "sd_dat[3]" PULL_MODE=NONE IO_TYPE=LVCMOS33;
 
 // Mister SDRAM v3.0 connected through 40-pin port
 
-IO_LOC "O_sdram_cs_n" K9;
-IO_PORT "O_sdram_cs_n" IO_TYPE=LVCMOS33 PULL_MODE=UP;

@@ -52,7 +52,7 @@ set_option -synthesis_tool gowinsynthesis
 set_option -output_base_name a2600nano_tm60k
 set_option -verilog_std sysv2017
 set_option -vhdl_std vhd2008
-set_option -top_module A2600_top_tm60k
+set_option -top_module A2600_top
 set_option -use_mspi_as_gpio 1
 set_option -use_sspi_as_gpio 1
 set_option -use_done_as_gpio 1

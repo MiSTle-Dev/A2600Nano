@@ -20,7 +20,7 @@ add_file src/misc/sd_card.v
 add_file src/misc/sd_rw.v
 add_file src/misc/sdcmd_ctrl.v
 add_file src/misc/sysctrl.v
-add_file src/misc/video.v
+add_file src/misc/video_tc.v
 add_file src/misc/video_analyzer.v
 add_file src/t65/T65.vhd
 add_file src/t65/T65_ALU.vhd
@@ -37,9 +37,9 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb_gw5a.vhd
-add_file src/a2600_top_tm138k_pro.vhd
-add_file src/a2600_top_tm138k_pro.cst
-add_file src/a2600_top_tm138k_pro.sdc
+add_file src/tang/mega138kpro/a2600_top_tm138k_pro.vhd
+add_file src/tang/mega138kpro/a2600_top_tm138k_pro.cst
+add_file src/tang/mega138kpro/a2600_top_tm138k_pro.sdc
 add_file src/video_stabilize.sv
 add_file src/tang/mega138kpro/gowin_pll_ntsc_138k_pro.vhd
 add_file src/tang/mega138kpro/gowin_pll_ntsc_138k_pro_mod.vhd
@@ -70,3 +70,4 @@ set_option -loading_rate 70.000
 
 #run syn
 run all
+#run pnr

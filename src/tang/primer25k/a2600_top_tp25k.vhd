@@ -45,9 +45,7 @@ entity A2600_top is
     -- sd interface
     sd_clk      : out std_logic;
     sd_cmd      : inout std_logic;
-    sd_dat      : inout std_logic_vector(3 downto 0);
-
-    O_sdram_cs_n : out std_logic
+    sd_dat      : inout std_logic_vector(3 downto 0)
     );
 end;
 
@@ -252,8 +250,6 @@ component CLKDIV
 end component;
 
 begin
-  O_sdram_cs_n <= '1';
-  
 
   process (pll_locked)
   begin

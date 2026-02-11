@@ -44,12 +44,24 @@ entity A2600_top is
     tmds_clk_p  : out std_logic;
     tmds_d_n    : out std_logic_vector( 2 downto 0);
     tmds_d_p    : out std_logic_vector( 2 downto 0);
+    -- internal lcd
+    lcd_clk    : out std_logic; -- lcd is RGB 565
+    lcd_hs      : out std_logic; -- lcd horizontal synchronization
+    lcd_vs      : out std_logic; -- lcd vertical synchronization        
+    lcd_de      : out std_logic; -- lcd data enable     
+    lcd_bl      : out std_logic; -- lcd backlight control
+    lcd_r       : out std_logic_vector(5 downto 0);  -- lcd red
+    lcd_g       : out std_logic_vector(5 downto 0);  -- lcd green
+    lcd_b       : out std_logic_vector(5 downto 0);  -- lcd blue
+    -- audio
+    hp_bck      : out std_logic;
+    hp_ws       : out std_logic;
+    hp_din      : out std_logic;
+    pa_en       : out std_logic;
     -- sd interface
     sd_clk      : out std_logic;
     sd_cmd      : inout std_logic;
     sd_dat      : inout std_logic_vector(3 downto 0);
-
-    O_sdram_cs_n : out std_logic;
 
     ws2812       : out std_logic;
 
@@ -308,8 +320,6 @@ end component;
 
 begin
 
-  O_sdram_cs_n <= '1';
-
   key_reset_n <= key_n(0);
   key_user_n <= key_n(1);
 
@@ -474,11 +484,16 @@ generic map (
     outbyte         => sd_rd_data         -- a byte of sector content
 );
 
-video_inst: entity work.video 
+video_inst: entity work.video
+generic map
+(
+  STEREO  => false
+)
 port map(
       pll_lock     => pll_locked, 
       clk          => clk,
       clk_pixel_x5 => clk_pixel_x5,
+      ntscmode  => '1',
 
       vb_in     => vblank,
       hb_in     => hblank,
@@ -505,7 +520,21 @@ port map(
       tmds_clk_n => tmds_clk_n,
       tmds_clk_p => tmds_clk_p,
       tmds_d_n   => tmds_d_n,
-      tmds_d_p   => tmds_d_p
+      tmds_d_p   => tmds_d_p,
+
+      lcd_clk  => lcd_clk,
+      lcd_hs_n => lcd_hs,
+      lcd_vs_n => lcd_vs,
+      lcd_de   => lcd_de,
+      lcd_r(7 downto 2) => lcd_r,
+      lcd_g(7 downto 2) => lcd_g,
+      lcd_b(7 downto 2) => lcd_b,
+      lcd_bl   => lcd_bl,
+
+      hp_bck   => hp_bck,
+      hp_ws    => hp_ws,
+      hp_din   => hp_din,
+      pa_en    => pa_en
       );
 
 -- target GW5A 
@@ -522,7 +551,7 @@ mainclock: entity work.Gowin_PLL_ntsc_138k_pro
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
       clkin   => clk_50mhz,
-      init_clk => clk
+      init_clk => clk_50mhz
     );
 
 div1_inst: CLKDIV

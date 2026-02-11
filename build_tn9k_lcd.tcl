@@ -37,9 +37,9 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb_tn9k.vhd
-add_file src/a2600_top_tn9k_lcd.vhd
-add_file src/a2600_top_tn9k_lcd.cst
-add_file src/a2600_top_tn9k_lcd.sdc
+add_file src/tang/nano9k_lcd/a2600_top_tn9k_lcd.vhd
+add_file src/tang/nano9k_lcd/a2600_top_tn9k_lcd.cst
+add_file src/tang/nano9k_lcd/a2600_top_tn9k_lcd.sdc
 add_file src/video_stabilize.sv
 add_file src/detect2600.sv
 
