@@ -13,16 +13,16 @@ entity A2600_top is
   port
   (
     clk_27mhz   : in std_logic; -- 27 Mhz XO
-    --clk_0       : in std_logic; -- Mhz PLL
-    --clk_1       : in std_logic; -- Mhz PLL
-    --clk_2       : in std_logic; -- Mhz PLL
-    reset       : in std_logic; -- S2 button
-    user        : in std_logic; -- S1 button
+    key_reset : in std_logic; -- S2 button
+    key_user  : in std_logic; -- S1 button
     leds_n      : out std_logic_vector(5 downto 0);
-    io          : in std_logic_vector(5 downto 0);
-
-    -- SPI interface Sipeed M0S Dock external BL616 uC
-    m0s         : inout std_logic_vector(4 downto 0);
+    --io          : in std_logic_vector(5 downto 0);
+    -- SPI connection to onboard BL616
+    spi_sclk    : in std_logic;
+    spi_csn     : in std_logic;
+    spi_dir     : out std_logic;
+    spi_dat     : in std_logic;
+    spi_irqn    : out std_logic;
     -- internal lcd
     lcd_dclk    : out std_logic; -- lcd is RGB 565
     lcd_hs      : out std_logic; -- lcd horizontal synchronization
@@ -57,7 +57,6 @@ attribute syn_keep of clk_cpu      : signal is 1;
 attribute syn_keep of clk          : signal is 1;
 attribute syn_keep of clk_14       : signal is 1;
 attribute syn_keep of clk_pixel_x5 : signal is 1;
-attribute syn_keep of m0s          : signal is 1;
 
   -- keyboard
 signal keyboard_matrix_out : std_logic_vector(7 downto 0);
@@ -278,6 +277,7 @@ signal btn_b_w          : std_logic;
 signal btn_diff_l       : std_logic;
 signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
+signal spi_intn         : std_logic;
 
 component CLKDIV
     generic (
@@ -337,15 +337,11 @@ component rPLL
 end component;
 
 begin
--- ----------------- SPI input parser ----------------------
--- map output data onto both spi outputs
-  spi_io_din  <= m0s(1);
-  spi_io_ss   <= m0s(2);
-  spi_io_clk  <= m0s(3);
-  m0s(0)      <= spi_io_dout; -- M0 Dock
-
--- https://store.curiousinventor.com/guides/PS2/
--- https://hackaday.io/project/170365-blueretro/log/186471-playstation-playstation-2-spi-interface
+  spi_io_din <= spi_dat;
+  spi_io_ss <= spi_csn;
+  spi_io_clk <= spi_sclk;
+  spi_dir <= spi_io_dout;
+  spi_irqn <= spi_intn;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -682,7 +678,7 @@ joyDS2A_p1 <= key_rstick & key_lstick & key_r2 & key_l2 & key_start & key_select
               key_square & key_triangle & "00" & "0000";
 joyDS2A_p2 <= key_rstick2 & key_lstick2 & key_r22 & key_l22 & key_start2 & key_select2 & key_r12 & key_l12 &
               key_square2 & key_triangle2 & "00" & "0000";
-joyDigital <= not(x"FF" & "11" & io(5) & io(0) & io(2) & io(1) & io(4) & io(3));
+joyDigital <= x"0000";
 -- Logitech Rumble Pad 2
 joyUsb1    <= "0000" &
               extra_button0(5) & -- BTN_START
@@ -732,7 +728,7 @@ joyNumpad  <= x"00" & "00" & numpad(5) & numpad(4) & numpad(3) & numpad(2) & num
 joyMouse   <= extra_button0 & mouse_btns & "00" & "0000";
 
 -- send external DB9 joystick port to µC
-db9_joy <= not('1' & io(0) & io(1) & io(2) & io(3) & io(4));
+db9_joy <= 6x"00";
 
 process(clk)
 begin
@@ -1019,11 +1015,11 @@ module_inst: entity work.sysctrl
   port_in_strobe      => open,
   port_in_data        => open,
 
-  int_out_n           => m0s(4),
+  int_out_n           => spi_intn,
   int_in              => std_logic_vector(unsigned'("0000" & sdc_int & '0' & hid_int & '0')),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(user & reset), -- S2 and S1 buttons
+  buttons             => unsigned'(key_user & key_reset), -- S2 and S1 buttons
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );

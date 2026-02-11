@@ -1,12 +1,3 @@
---Copyright (C)2014-2024 Gowin Semiconductor Corporation.
---All rights reserved.
---File Title: IP file
---Tool Version: V1.9.10.03 (64-bit)
---Part Number: GW1NR-LV9QN88PC6/I5
---Device: GW1NR-9
---Device Version: C
---Created Time: Tue Jan 28 12:14:34 2025
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -20,146 +11,194 @@ entity Gowin_SDPB is
         ceb: in std_logic;
         resetb: in std_logic;
         oce: in std_logic;
-        ada: in std_logic_vector(15 downto 0);
+        ada: in std_logic_vector(14 downto 0);
         din: in std_logic_vector(7 downto 0);
-        adb: in std_logic_vector(15 downto 0)
+        adb: in std_logic_vector(14 downto 0)
     );
 end Gowin_SDPB;
 
 architecture Behavioral of Gowin_SDPB is
 
-    signal lut_f_0: std_logic;
-    signal lut_f_1: std_logic;
-    signal sdpb_inst_0_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_0_dout: std_logic_vector(0 downto 0);
-    signal sdpb_inst_1_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_1_dout: std_logic_vector(0 downto 0);
-    signal sdpb_inst_2_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_2_dout: std_logic_vector(1 downto 1);
-    signal sdpb_inst_3_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_3_dout: std_logic_vector(1 downto 1);
-    signal sdpb_inst_4_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_4_dout: std_logic_vector(2 downto 2);
-    signal sdpb_inst_5_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_5_dout: std_logic_vector(2 downto 2);
-    signal sdpb_inst_6_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_6_dout: std_logic_vector(3 downto 3);
-    signal sdpb_inst_7_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_7_dout: std_logic_vector(3 downto 3);
-    signal sdpb_inst_8_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_8_dout: std_logic_vector(4 downto 4);
-    signal sdpb_inst_9_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_9_dout: std_logic_vector(4 downto 4);
-    signal sdpb_inst_10_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_10_dout: std_logic_vector(5 downto 5);
-    signal sdpb_inst_11_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_11_dout: std_logic_vector(5 downto 5);
-    signal sdpb_inst_12_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_12_dout: std_logic_vector(6 downto 6);
-    signal sdpb_inst_13_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_13_dout: std_logic_vector(6 downto 6);
-    signal sdpb_inst_14_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_14_dout: std_logic_vector(7 downto 7);
-    signal sdpb_inst_15_dout_w: std_logic_vector(30 downto 0);
-    signal sdpb_inst_15_dout: std_logic_vector(7 downto 7);
-    signal sdpb_inst_16_dout_w: std_logic_vector(23 downto 0);
-    signal sdpb_inst_16_dout: std_logic_vector(7 downto 0);
+    signal sdpb_inst_0_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_0_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_1_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_1_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_2_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_2_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_3_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_3_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_4_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_4_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_5_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_5_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_6_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_6_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_7_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_7_dout: std_logic_vector(3 downto 0);
+    signal sdpb_inst_8_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_8_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_9_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_9_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_10_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_10_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_11_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_11_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_12_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_12_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_13_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_13_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_14_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_14_dout: std_logic_vector(7 downto 4);
+    signal sdpb_inst_15_dout_w: std_logic_vector(27 downto 0);
+    signal sdpb_inst_15_dout: std_logic_vector(7 downto 4);
     signal dff_q_0: std_logic;
     signal dff_q_1: std_logic;
+    signal dff_q_2: std_logic;
+    signal mux_o_0: std_logic;
+    signal mux_o_1: std_logic;
+    signal mux_o_2: std_logic;
+    signal mux_o_3: std_logic;
+    signal mux_o_4: std_logic;
+    signal mux_o_5: std_logic;
+    signal mux_o_7: std_logic;
+    signal mux_o_8: std_logic;
     signal mux_o_9: std_logic;
+    signal mux_o_10: std_logic;
+    signal mux_o_11: std_logic;
+    signal mux_o_12: std_logic;
+    signal mux_o_14: std_logic;
+    signal mux_o_15: std_logic;
+    signal mux_o_16: std_logic;
+    signal mux_o_17: std_logic;
+    signal mux_o_18: std_logic;
+    signal mux_o_19: std_logic;
     signal mux_o_21: std_logic;
+    signal mux_o_22: std_logic;
+    signal mux_o_23: std_logic;
+    signal mux_o_24: std_logic;
+    signal mux_o_25: std_logic;
+    signal mux_o_26: std_logic;
+    signal mux_o_28: std_logic;
+    signal mux_o_29: std_logic;
+    signal mux_o_30: std_logic;
+    signal mux_o_31: std_logic;
+    signal mux_o_32: std_logic;
     signal mux_o_33: std_logic;
+    signal mux_o_35: std_logic;
+    signal mux_o_36: std_logic;
+    signal mux_o_37: std_logic;
+    signal mux_o_38: std_logic;
+    signal mux_o_39: std_logic;
+    signal mux_o_40: std_logic;
+    signal mux_o_42: std_logic;
+    signal mux_o_43: std_logic;
+    signal mux_o_44: std_logic;
     signal mux_o_45: std_logic;
-    signal mux_o_57: std_logic;
-    signal mux_o_69: std_logic;
-    signal mux_o_81: std_logic;
-    signal mux_o_93: std_logic;
+    signal mux_o_46: std_logic;
+    signal mux_o_47: std_logic;
+    signal mux_o_49: std_logic;
+    signal mux_o_50: std_logic;
+    signal mux_o_51: std_logic;
+    signal mux_o_52: std_logic;
+    signal mux_o_53: std_logic;
+    signal mux_o_54: std_logic;
     signal gw_gnd: std_logic;
     signal sdpb_inst_0_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_0_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_0_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_0_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_0_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_0_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_1_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_1_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_1_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_1_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_1_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_1_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_2_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_2_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_2_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_2_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_2_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_2_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_3_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_3_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_3_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_3_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_3_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_3_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_4_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_4_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_4_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_4_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_4_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_4_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_5_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_5_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_5_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_5_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_5_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_5_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_6_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_6_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_6_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_6_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_6_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_6_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_7_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_7_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_7_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_7_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_7_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_7_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_8_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_8_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_8_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_8_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_8_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_8_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_9_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_9_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_9_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_9_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_9_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_9_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_10_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_10_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_10_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_10_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_10_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_10_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_11_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_11_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_11_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_11_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_11_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_11_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_12_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_12_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_12_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_12_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_12_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_12_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_13_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_13_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_13_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_13_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_13_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_13_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_14_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_14_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_14_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_14_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_14_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_14_DO_o: std_logic_vector(31 downto 0);
     signal sdpb_inst_15_BLKSELA_i: std_logic_vector(2 downto 0);
     signal sdpb_inst_15_BLKSELB_i: std_logic_vector(2 downto 0);
+    signal sdpb_inst_15_ADA_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_15_DI_i: std_logic_vector(31 downto 0);
+    signal sdpb_inst_15_ADB_i: std_logic_vector(13 downto 0);
     signal sdpb_inst_15_DO_o: std_logic_vector(31 downto 0);
-    signal sdpb_inst_16_BLKSELA_i: std_logic_vector(2 downto 0);
-    signal sdpb_inst_16_BLKSELB_i: std_logic_vector(2 downto 0);
-    signal sdpb_inst_16_ADA_i: std_logic_vector(13 downto 0);
-    signal sdpb_inst_16_DI_i: std_logic_vector(31 downto 0);
-    signal sdpb_inst_16_ADB_i: std_logic_vector(13 downto 0);
-    signal sdpb_inst_16_DO_o: std_logic_vector(31 downto 0);
-
-    -- component declaration
-    component LUT5
-        generic (
-            INIT: in bit_vector := X"00000000"
-        );
-        port (
-            F: out std_logic;
-            I0: in std_logic;
-            I1: in std_logic;
-            I2: in std_logic;
-            I3: in std_logic;
-            I4: in std_logic
-        );
-    end component;
 
     --component declaration
     component SDPB
@@ -275,144 +314,191 @@ architecture Behavioral of Gowin_SDPB is
 begin
     gw_gnd <= '0';
 
-    sdpb_inst_0_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_0_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_0_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(0);
-    sdpb_inst_0_dout(0) <= sdpb_inst_0_DO_o(0);
-    sdpb_inst_0_dout_w(30 downto 0) <= sdpb_inst_0_DO_o(31 downto 1) ;
-    sdpb_inst_1_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_1_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_1_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(0);
-    sdpb_inst_1_dout(0) <= sdpb_inst_1_DO_o(0);
-    sdpb_inst_1_dout_w(30 downto 0) <= sdpb_inst_1_DO_o(31 downto 1) ;
-    sdpb_inst_2_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_2_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_2_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(1);
-    sdpb_inst_2_dout(1) <= sdpb_inst_2_DO_o(0);
-    sdpb_inst_2_dout_w(30 downto 0) <= sdpb_inst_2_DO_o(31 downto 1) ;
-    sdpb_inst_3_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_3_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_3_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(1);
-    sdpb_inst_3_dout(1) <= sdpb_inst_3_DO_o(0);
-    sdpb_inst_3_dout_w(30 downto 0) <= sdpb_inst_3_DO_o(31 downto 1) ;
-    sdpb_inst_4_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_4_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_4_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(2);
-    sdpb_inst_4_dout(2) <= sdpb_inst_4_DO_o(0);
-    sdpb_inst_4_dout_w(30 downto 0) <= sdpb_inst_4_DO_o(31 downto 1) ;
-    sdpb_inst_5_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_5_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_5_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(2);
-    sdpb_inst_5_dout(2) <= sdpb_inst_5_DO_o(0);
-    sdpb_inst_5_dout_w(30 downto 0) <= sdpb_inst_5_DO_o(31 downto 1) ;
-    sdpb_inst_6_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_6_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_6_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3);
-    sdpb_inst_6_dout(3) <= sdpb_inst_6_DO_o(0);
-    sdpb_inst_6_dout_w(30 downto 0) <= sdpb_inst_6_DO_o(31 downto 1) ;
-    sdpb_inst_7_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_7_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_7_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3);
-    sdpb_inst_7_dout(3) <= sdpb_inst_7_DO_o(0);
-    sdpb_inst_7_dout_w(30 downto 0) <= sdpb_inst_7_DO_o(31 downto 1) ;
-    sdpb_inst_8_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_8_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_8_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(4);
-    sdpb_inst_8_dout(4) <= sdpb_inst_8_DO_o(0);
-    sdpb_inst_8_dout_w(30 downto 0) <= sdpb_inst_8_DO_o(31 downto 1) ;
-    sdpb_inst_9_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_9_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_9_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(4);
-    sdpb_inst_9_dout(4) <= sdpb_inst_9_DO_o(0);
-    sdpb_inst_9_dout_w(30 downto 0) <= sdpb_inst_9_DO_o(31 downto 1) ;
-    sdpb_inst_10_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_10_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_10_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(5);
-    sdpb_inst_10_dout(5) <= sdpb_inst_10_DO_o(0);
-    sdpb_inst_10_dout_w(30 downto 0) <= sdpb_inst_10_DO_o(31 downto 1) ;
-    sdpb_inst_11_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_11_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_11_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(5);
-    sdpb_inst_11_dout(5) <= sdpb_inst_11_DO_o(0);
-    sdpb_inst_11_dout_w(30 downto 0) <= sdpb_inst_11_DO_o(31 downto 1) ;
-    sdpb_inst_12_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_12_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_12_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(6);
-    sdpb_inst_12_dout(6) <= sdpb_inst_12_DO_o(0);
-    sdpb_inst_12_dout_w(30 downto 0) <= sdpb_inst_12_DO_o(31 downto 1) ;
-    sdpb_inst_13_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_13_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_13_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(6);
-    sdpb_inst_13_dout(6) <= sdpb_inst_13_DO_o(0);
-    sdpb_inst_13_dout_w(30 downto 0) <= sdpb_inst_13_DO_o(31 downto 1) ;
-    sdpb_inst_14_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_14_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_14_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7);
-    sdpb_inst_14_dout(7) <= sdpb_inst_14_DO_o(0);
-    sdpb_inst_14_dout_w(30 downto 0) <= sdpb_inst_14_DO_o(31 downto 1) ;
-    sdpb_inst_15_BLKSELA_i <= gw_gnd & ada(15) & ada(14);
-    sdpb_inst_15_BLKSELB_i <= gw_gnd & adb(15) & adb(14);
-    sdpb_inst_15_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7);
-    sdpb_inst_15_dout(7) <= sdpb_inst_15_DO_o(0);
-    sdpb_inst_15_dout_w(30 downto 0) <= sdpb_inst_15_DO_o(31 downto 1) ;
-    sdpb_inst_16_BLKSELA_i <= gw_gnd & gw_gnd & lut_f_0;
-    sdpb_inst_16_BLKSELB_i <= gw_gnd & gw_gnd & lut_f_1;
-    sdpb_inst_16_ADA_i <= ada(10 downto 0) & gw_gnd & gw_gnd & gw_gnd;
-    sdpb_inst_16_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 0);
-    sdpb_inst_16_ADB_i <= adb(10 downto 0) & gw_gnd & gw_gnd & gw_gnd;
-    sdpb_inst_16_dout(7 downto 0) <= sdpb_inst_16_DO_o(7 downto 0) ;
-    sdpb_inst_16_dout_w(23 downto 0) <= sdpb_inst_16_DO_o(31 downto 8) ;
-
-    lut_inst_0 : LUT5
-        generic map (
-            INIT => X"00010000"
-        )
-        port map (
-            F => lut_f_0,
-            I0 => ada(11),
-            I1 => ada(12),
-            I2 => ada(13),
-            I3 => ada(14),
-            I4 => ada(15)
-        );
-
-    lut_inst_1 : LUT5
-        generic map (
-            INIT => X"00010000"
-        )
-        port map (
-            F => lut_f_1,
-            I0 => adb(11),
-            I1 => adb(12),
-            I2 => adb(13),
-            I3 => adb(14),
-            I4 => adb(15)
-        );
+    sdpb_inst_0_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_0_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_0_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_0_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_0_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_0_dout(3 downto 0) <= sdpb_inst_0_DO_o(3 downto 0) ;
+    sdpb_inst_0_dout_w(27 downto 0) <= sdpb_inst_0_DO_o(31 downto 4) ;
+    sdpb_inst_1_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_1_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_1_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_1_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_1_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_1_dout(3 downto 0) <= sdpb_inst_1_DO_o(3 downto 0) ;
+    sdpb_inst_1_dout_w(27 downto 0) <= sdpb_inst_1_DO_o(31 downto 4) ;
+    sdpb_inst_2_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_2_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_2_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_2_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_2_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_2_dout(3 downto 0) <= sdpb_inst_2_DO_o(3 downto 0) ;
+    sdpb_inst_2_dout_w(27 downto 0) <= sdpb_inst_2_DO_o(31 downto 4) ;
+    sdpb_inst_3_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_3_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_3_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_3_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_3_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_3_dout(3 downto 0) <= sdpb_inst_3_DO_o(3 downto 0) ;
+    sdpb_inst_3_dout_w(27 downto 0) <= sdpb_inst_3_DO_o(31 downto 4) ;
+    sdpb_inst_4_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_4_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_4_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_4_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_4_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_4_dout(3 downto 0) <= sdpb_inst_4_DO_o(3 downto 0) ;
+    sdpb_inst_4_dout_w(27 downto 0) <= sdpb_inst_4_DO_o(31 downto 4) ;
+    sdpb_inst_5_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_5_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_5_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_5_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_5_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_5_dout(3 downto 0) <= sdpb_inst_5_DO_o(3 downto 0) ;
+    sdpb_inst_5_dout_w(27 downto 0) <= sdpb_inst_5_DO_o(31 downto 4) ;
+    sdpb_inst_6_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_6_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_6_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_6_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_6_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_6_dout(3 downto 0) <= sdpb_inst_6_DO_o(3 downto 0) ;
+    sdpb_inst_6_dout_w(27 downto 0) <= sdpb_inst_6_DO_o(31 downto 4) ;
+    sdpb_inst_7_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_7_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_7_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_7_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(3 downto 0);
+    sdpb_inst_7_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_7_dout(3 downto 0) <= sdpb_inst_7_DO_o(3 downto 0) ;
+    sdpb_inst_7_dout_w(27 downto 0) <= sdpb_inst_7_DO_o(31 downto 4) ;
+    sdpb_inst_8_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_8_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_8_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_8_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_8_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_8_dout(7 downto 4) <= sdpb_inst_8_DO_o(3 downto 0) ;
+    sdpb_inst_8_dout_w(27 downto 0) <= sdpb_inst_8_DO_o(31 downto 4) ;
+    sdpb_inst_9_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_9_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_9_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_9_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_9_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_9_dout(7 downto 4) <= sdpb_inst_9_DO_o(3 downto 0) ;
+    sdpb_inst_9_dout_w(27 downto 0) <= sdpb_inst_9_DO_o(31 downto 4) ;
+    sdpb_inst_10_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_10_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_10_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_10_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_10_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_10_dout(7 downto 4) <= sdpb_inst_10_DO_o(3 downto 0) ;
+    sdpb_inst_10_dout_w(27 downto 0) <= sdpb_inst_10_DO_o(31 downto 4) ;
+    sdpb_inst_11_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_11_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_11_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_11_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_11_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_11_dout(7 downto 4) <= sdpb_inst_11_DO_o(3 downto 0) ;
+    sdpb_inst_11_dout_w(27 downto 0) <= sdpb_inst_11_DO_o(31 downto 4) ;
+    sdpb_inst_12_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_12_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_12_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_12_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_12_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_12_dout(7 downto 4) <= sdpb_inst_12_DO_o(3 downto 0) ;
+    sdpb_inst_12_dout_w(27 downto 0) <= sdpb_inst_12_DO_o(31 downto 4) ;
+    sdpb_inst_13_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_13_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_13_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_13_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_13_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_13_dout(7 downto 4) <= sdpb_inst_13_DO_o(3 downto 0) ;
+    sdpb_inst_13_dout_w(27 downto 0) <= sdpb_inst_13_DO_o(31 downto 4) ;
+    sdpb_inst_14_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_14_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_14_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_14_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_14_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_14_dout(7 downto 4) <= sdpb_inst_14_DO_o(3 downto 0) ;
+    sdpb_inst_14_dout_w(27 downto 0) <= sdpb_inst_14_DO_o(31 downto 4) ;
+    sdpb_inst_15_BLKSELA_i <= ada(14) & ada(13) & ada(12);
+    sdpb_inst_15_BLKSELB_i <= adb(14) & adb(13) & adb(12);
+    sdpb_inst_15_ADA_i <= ada(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_15_DI_i <= gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & gw_gnd & din(7 downto 4);
+    sdpb_inst_15_ADB_i <= adb(11 downto 0) & gw_gnd & gw_gnd;
+    sdpb_inst_15_dout(7 downto 4) <= sdpb_inst_15_DO_o(3 downto 0) ;
+    sdpb_inst_15_dout_w(27 downto 0) <= sdpb_inst_15_DO_o(31 downto 4) ;
 
     sdpb_inst_0: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
             BLK_SEL_0 => "000",
             BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"6F7FD205202807404523D0CD5D8ADB9E30739257F098C151D008AC904A555400",
-            INIT_RAM_01 => X"8A44429110AA04196D01166D4EDFFB6E7D6CABFE6DAA52DBA86DB6EFB40DA05B",
-            INIT_RAM_02 => X"FA9619B20DCBE400A9158721E48998FCDBDF841CC952EC0EA5DD9DF0A828A282",
-            INIT_RAM_03 => X"000F18DF7883BAA109BEEEE2DC38B702FB974E0BBB2F9DDC29C39E18F6581E1F",
-            INIT_RAM_04 => X"0561940E01F78C6DA80F8EBED7403A7D7475AA1568F35755A424B1927704E047",
-            INIT_RAM_05 => X"0003F314F316B1005B93CA6154A23F4D5D51354B00D5D5690ED0B4189E00F047",
-            INIT_RAM_06 => X"F131E2B7C4C0CFFCC3831E03F30E68C79DBAF7CFBA1999D3ABA203AF77758289",
-            INIT_RAM_07 => X"D30E163C21D30E28C78CABB17DF620EB17462E087B50BF9B89870DC6C29CAFCD",
-            INIT_RAM_08 => X"4108461832A8020DA463756B8413D24048A1174438108769D0ECD8F34E8D833D",
-            INIT_RAM_09 => X"7B0320FC6FBBC5C1EF7814FC1AEBABAC2BABAE70CCBAFAC590294A341B6D519A",
-            INIT_RAM_0A => X"2D62D60A2EB7089558C022E11C1AF5B16F599816199980A70A0A68C5AC4D42F4",
-            INIT_RAM_0B => X"07DC022A800899E0258380967002458201D2C02087209B780250200800202727",
-            INIT_RAM_0C => X"003C04040400080061A40180C020E10C88830088800200C02430C5FD20F1DC04",
-            INIT_RAM_0D => X"FF80000000D1D1D100D100D100D1000000D1008100001000F7800DBC0126D000",
-            INIT_RAM_0E => X"000000000000000000000000000000000000000002B400A5A5A5AA3FFFFFFE00",
-            INIT_RAM_0F => X"000B552401F000F8007C0E000E000003801C0000000000000100000000000000"
+            INIT_RAM_00 => X"914D440604429C0E9C545F04522D0026CB00525A2525052529830B08AA8A0288",
+            INIT_RAM_01 => X"0A35C0C6251580D59AC30C58E509E5F559F5882610251620156006830D450441",
+            INIT_RAM_02 => X"09808965C034E0F9F9C580A0512C95A9C509F9C5D6E0165655A958975AA15596",
+            INIT_RAM_03 => X"655A9575693535D9B589067020CC034D009066020CB03420066005B589E00620",
+            INIT_RAM_04 => X"525E98E0255035895655A95697549353529165020CA03509D0164020C9035095",
+            INIT_RAM_05 => X"A155916903549F0252509C193535D9D0C5103549701670D0A925265655A95697",
+            INIT_RAM_06 => X"891019A5A80E6647240B0F980F9C5B21056C953055E5F935D9355655A956975A",
+            INIT_RAM_07 => X"5E0A509607640748814C0A509807640148874C0A509E529E0E6207660A0590A5",
+            INIT_RAM_08 => X"F6B049C393019703940599079D5F004E5C58966600565C0A50920C5096680650",
+            INIT_RAM_09 => X"F98B58393B0B5793B060C5AAAAAD5100F96090850F6B049C393039A06080F930",
+            INIT_RAM_0A => X"50B03087040F6B0F5AAA89D560F6C60F939203449804940590039406979D5100",
+            INIT_RAM_0B => X"59555E9C5E0DA79AAA05B009F0B940D066E0F9C5B5E8DA79D5508F602C64040A",
+            INIT_RAM_0C => X"AC905A0F5DAAA4915C0393546A09300055B9A15865897088C60D9D9C26075F9B",
+            INIT_RAM_0D => X"595198755029A57549A0F1DAAAA890575E975295049A595D98857545558F1DAA",
+            INIT_RAM_0E => X"4C0050295099555095565958F7DAA696590FBDAAA4975C009A5B0FDDAAAAA090",
+            INIT_RAM_0F => X"00000000000035F920A3548CD5A559B52515B024D0002A5B9C555C5A5254C065",
+            INIT_RAM_10 => X"D41A050442582502DEFDAC0F9805A6D625F5E5F942CAAF0859542CA04B004D55",
+            INIT_RAM_11 => X"21F5018AC5B5A58F5E1E5C1AAAA5A5C561501084B59988F501E521F5E1E5C10B",
+            INIT_RAM_12 => X"5C561C0808485B5B5A6A5B5C525B5D58F5E509B541602044805B5C58E5B5B5E5",
+            INIT_RAM_13 => X"00080505EF98AC0F98254FCAA8085954ACAAE045555BC353562EFDAC0F9AF58B",
+            INIT_RAM_14 => X"0442551C358140CC56130F084A651CAA10859556CA042008D9558CA041004D55",
+            INIT_RAM_15 => X"E521F5E1E5C10445AAD5A525A10CD6130E084A0AF501E521F5E1E5C10BD4140F",
+            INIT_RAM_16 => X"25E5D0DF5E0DAA15F5C6DE5CEDD6AA430D4B4D4850100EDAA0955D5B0B48F501",
+            INIT_RAM_17 => X"0000000000066C3519356075A049A5A0B915001526C30152529F4E4B08AAAAAA",
+            INIT_RAM_18 => X"501C5E1B5C18AA5A0A424E1B5C1815150515C5B5097565C95444645430A49025",
+            INIT_RAM_19 => X"58A7910990575C301935C9393506555B5C5B50980A6B5C4B5C6B5861B541A21B",
+            INIT_RAM_1A => X"198408915806E01984039158A0000635F935601984089158A790582019840391",
+            INIT_RAM_1B => X"B9350009E01984099158A690583509B9358009C0198408069980B91535F93560",
+            INIT_RAM_1C => X"5E029C0198402915880635093560295019840298F00915A6905835B935603509",
+            INIT_RAM_1D => X"404505558988055400545798C00098AAA1915855690582009053579356035093",
+            INIT_RAM_1E => X"1984039758A89108965A58979A5D6009095575295595C9300098AAA891589055",
+            INIT_RAM_1F => X"F9A56019840A9758A66F01984039758AC01066A5F9A56019840A9758A8965820",
+            INIT_RAM_20 => X"79A582CA579A5F029D019840B9758A79658A579A56029901984066B940F975A5",
+            INIT_RAM_21 => X"A3009A8A5C9A0ECB024DA5F9A560298402975866E029840298800975A79658A5",
+            INIT_RAM_22 => X"D45E0DAAC5D642F5E5D5AB0D6F9C5039B08AA50E0C410055D9450A98A58AAAAA",
+            INIT_RAM_23 => X"2F0C088D62005AAA41820D54080550E0E41B0AF4B276746484C42434040055E1",
+            INIT_RAM_24 => X"F20500088A589A09618A589AAAF9618020075C950F9C534F016F220F960F9C50",
+            INIT_RAM_25 => X"2452925D90589E53965C5F9A0D590880D9A0F9005E579C549D5B5A509B0AA589",
+            INIT_RAM_26 => X"F7DAF9B545F7DAAAAA09850AB5B5B5A6882B509A5F9C525F905E9E599C549102",
+            INIT_RAM_27 => X"E9F7DAF9CAAAA0970E5AAA8AB5B539600F5E5F9D5A5952515B024DA519864265",
+            INIT_RAM_28 => X"6A4C30768CC83030C57096409526C30152529B0A2562F5E52560065C5F910B60",
+            INIT_RAM_29 => X"65B2D5792509D04910C9F6A068270F9C6205940B98019C079E68240C965C0F97",
+            INIT_RAM_2A => X"85AFDAA0F9AAAA40AEDAA6565F94066D62019F6824079658575D8DA796590AA5",
+            INIT_RAM_2B => X"00707707677600B05505455400201234605699B0B6BB4B97000A5A86508585A9",
+            INIT_RAM_2C => X"488000D4672D0A000E1000408000D4E0000000000852600E00746FDBA87421FD",
+            INIT_RAM_2D => X"800064EB19C500905100400000F260801EA4A15702908C2054E7F0170D71D000",
+            INIT_RAM_2E => X"00546B2FB4E000F112288000F4EB091AC195E226880000F467E4014792000210",
+            INIT_RAM_2F => X"0000A19D194B9726800000D260903A1070602680802034E010E7900919122022",
+            INIT_RAM_30 => X"0050450000B90000BB44476977719121209000001B1B80E1974D11240800074E",
+            INIT_RAM_31 => X"904E9C4E980000B9000800AE1E0E5E0E5800EECCEEEEEEBC0EEECEEEBB0000A4",
+            INIT_RAM_32 => X"4110A8011450A10E0E8CAE0194004CAE11E0C0EEEEB80000BB188E414ECC114C",
+            INIT_RAM_33 => X"00AA2000005555400000C1E004E001EE04EE0100088000C404E4B00CCEEE0E80",
+            INIT_RAM_34 => X"91D90B91F2E8080006061905707D19026888C60D4EB02D10B701A00400800A46",
+            INIT_RAM_35 => X"0000000031230001000000005A000005888880000000000008052002E0004660",
+            INIT_RAM_36 => X"C84C0004F96F0005C84C00043123000100000000F96F000500000000C84C0004",
+            INIT_RAM_37 => X"FFFFFFFFFEC80000C84C000400000000C000C008F96F0005F123C009F96F0005",
+            INIT_RAM_38 => X"3210012332100123D2DCD6D0C0B7B1BBB5BFB9B3BDB7B1BBFFFF731000000000",
+            INIT_RAM_39 => X"A2CE2EC240CA2CEEECE40CA2CEE6C8C000000A7610BDCD8682C2C2C85AF44FA5",
+            INIT_RAM_3A => X"E0842AC2A8CCEE0844AC228CCCE08448C2ACCEEE0A66ECCCCCC0846AECEE600C",
+            INIT_RAM_3B => X"006640006640006640006AAE26AAE26AAE26AAE2EE222EE222222842AC2ACCEE",
+            INIT_RAM_3C => X"E2044A216CACAAAAA44E8C8E4AEAA06060E8C8EE8C8E00000222222222222222",
+            INIT_RAM_3D => X"DCC0408C4CEF5DCC8808C4CEE6EECCC00000000808C808C8C8C8C8CCC8CCCCCC",
+            INIT_RAM_3E => X"00000CE26F7377E6608C15F6046E6008C4CEF5DCCCC08C4CEE6EEC8808C4CEF5",
+            INIT_RAM_3F => X"00000000000E147F0FE147AD0C160B00800CE26F7377E6600000CE26F7377E66"
         )
         port map (
             DO => sdpb_inst_0_DO_o,
@@ -425,19 +511,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_0_BLKSELA_i,
             BLKSELB => sdpb_inst_0_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_0_ADA_i,
             DI => sdpb_inst_0_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_0_ADB_i
         );
 
     sdpb_inst_1: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
             BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_1 => "001",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_1_DO_o,
@@ -450,35 +600,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_1_BLKSELA_i,
             BLKSELB => sdpb_inst_1_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_1_ADA_i,
             DI => sdpb_inst_1_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_1_ADB_i
         );
 
     sdpb_inst_2: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "000",
-            BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"92A886840D2A6226022A8222086521616180508A232625000111046345A294D4",
-            INIT_RAM_01 => X"5164041811157742029D9446222A2495824540A00898AD255288494549281210",
-            INIT_RAM_02 => X"044DC8A0E8A606A1291D70B55400114092D5A3E0A070AA8AE145011107111064",
-            INIT_RAM_03 => X"000AB0228A0D0142020010DD1B9054F8022A29E154100813853814C8288840D5",
-            INIT_RAM_04 => X"00C92580B8157A5910057450A22810AAA12951E880822AA11049690DAA5C0A40",
-            INIT_RAM_05 => X"001A2A8A80D1553FA14C949D10058148AA80CA85458AA8411080546301480200",
-            INIT_RAM_06 => X"A0800C22800108AA00181086A800C204301222911071328D050D5500022808A2",
-            INIT_RAM_07 => X"A814F0290EA81492052051480A020E000000040380841551500818A804830AA8",
-            INIT_RAM_08 => X"C0C7100296FA0A0213168CC29900049FC5154AA853A102D2A55500A695500E2A",
-            INIT_RAM_09 => X"B6795DAA54445216DA37C1AB314514019405450028501458C04491E890453D50",
-            INIT_RAM_0A => X"2DF2002692F5150236BCDD46C6944346B2800EB4C1016845CB0A243455BAA446",
-            INIT_RAM_0B => X"0817018CAC2A301B0FA260B10F02E1440B0000386942392000E4400200192DAA",
-            INIT_RAM_0C => X"380002233000287408094C0323E0C440110203550CFE77C20020C6E280524205",
-            INIT_RAM_0D => X"FFC0000000B0B0B000B000B000B0000000B000400000098604E050A18468C805",
-            INIT_RAM_0E => X"30C30FFFFFFFF9B38D8C2C20677803B8DD1BA37007215466C3C3443BBBBBFC00",
-            INIT_RAM_0F => X"001366140FFE07FF03FF83381800F806003001F000000000C6AF917AA3107FFF"
+            BLK_SEL_0 => "010",
+            BLK_SEL_1 => "010",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_2_DO_o,
@@ -491,19 +689,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_2_BLKSELA_i,
             BLKSELB => sdpb_inst_2_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_2_ADA_i,
             DI => sdpb_inst_2_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_2_ADB_i
         );
 
     sdpb_inst_3: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_0 => "011",
+            BLK_SEL_1 => "011",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_3_DO_o,
@@ -516,35 +778,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_3_BLKSELA_i,
             BLKSELB => sdpb_inst_3_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_3_ADA_i,
             DI => sdpb_inst_3_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_3_ADB_i
         );
 
     sdpb_inst_4: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "000",
-            BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"E79646330C446524039AB094CBE7C98D1B5326CFB11464763D657D918A550000",
-            INIT_RAM_01 => X"C976321C9C996711011F445874F99F363234A45AC69A17CDB264F3728C449889",
-            INIT_RAM_02 => X"BDD4108AEB6AE674815983BD03150558880C2C18A1650088CA045173E73C8666",
-            INIT_RAM_03 => X"00060DD951827EBBC88E7AE5945C2700A3878A03D94B1FD449C4C380C2C8D55C",
-            INIT_RAM_04 => X"05C51E0B4BEADD4CF42AABAEF1A32ED730D5DC17A14333B8C5A4F5177EA4B48F",
-            INIT_RAM_05 => X"001D1B2411629E007BD1FFF26E861E2CCEE7351C48CCEE356D4BC4B41790B48F",
-            INIT_RAM_06 => X"10842490421101661098420598424810903C185EE82EEA609CC22CC55D3EFF11",
-            INIT_RAM_07 => X"9846708C8D984618118069383CD80023B7073C800B902CC8C421146210852464",
-            INIT_RAM_08 => X"5188871AC33F754EF4FBF1D80563B04000C636611B84035992CC4232CCC02CAD",
-            INIT_RAM_09 => X"BA8160527DAA8D1BE9F8045508DB367063267C6088F76A04902088281D5B3156",
-            INIT_RAM_0A => X"2DF0DF01B0490994588267D78656F561CE4A2C9594056575B360E658A06F67C2",
-            INIT_RAM_0B => X"01250280A4063000396200E09903F3000E3088285304F96883D0420E00293E33",
-            INIT_RAM_0C => X"003E0A63700371F48061544D2BC006F33700015D8FFD7F012C003EE000027107",
-            INIT_RAM_0D => X"FFE0B10088B188B1B1B1B10000B100B1000000810000108E20A051B08DC44103",
-            INIT_RAM_0E => X"38E3894A52C6024F923CD1E69F3FE6F936A7F4FA031D2ABD0000BE905050F800",
-            INIT_RAM_0F => X"00176D501BBE0DDF06EF9778FFE7FC3FE9FF0FFE0022ABBF98D075A2AB500000"
+            BLK_SEL_0 => "100",
+            BLK_SEL_1 => "100",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_4_DO_o,
@@ -557,19 +867,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_4_BLKSELA_i,
             BLKSELB => sdpb_inst_4_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_4_ADA_i,
             DI => sdpb_inst_4_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_4_ADB_i
         );
 
     sdpb_inst_5: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_0 => "101",
+            BLK_SEL_1 => "101",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_5_DO_o,
@@ -582,35 +956,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_5_BLKSELA_i,
             BLKSELB => sdpb_inst_5_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_5_ADA_i,
             DI => sdpb_inst_5_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_5_ADB_i
         );
 
     sdpb_inst_6: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "000",
-            BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"1843B031206002E06C8BEA1B9EA036624A0AE59A6C000240900DC410C10065F3",
-            INIT_RAM_01 => X"520194C06533404AC6D01774182CC0C9890C0D0E8102C0321E030C88206180C2",
-            INIT_RAM_02 => X"475BC9B22EBD8C4122157E29A0C888B0F5528BF0CA53462CA6888CD158052490",
-            INIT_RAM_03 => X"000323A60885C508413085BA5FA4D7FA4C186BF86235E037E57A485039339F07",
-            INIT_RAM_04 => X"10FDC7D4F8181F7B45555515A60095AA23AB55EA02BE22A99010FDCA2B3D4644",
-            INIT_RAM_05 => X"0004409AC020357F2B5CADEC5507A5588AA0E8985588AA610123054728C1CE04",
-            INIT_RAM_06 => X"C1999A472664EC3066498980C199A46269844D0153555489155D45500A430028",
-            INIT_RAM_07 => X"E199931382E199E4627996D1412C3F9800F0038FA44882024CC4C10463929301",
-            INIT_RAM_08 => X"570724429680A00297A2AD71B940C7BF8F771B862498E4A66B34CCCD330CC332",
-            INIT_RAM_09 => X"EFFA5FA457504660BE2FD9AAD3719DC8099C9756EC4CD4DB81DD37F20671119C",
-            INIT_RAM_0A => X"000200000EB6162BBEFCF8610D091E9629193A4709CCD19650F088880D0A0164",
-            INIT_RAM_0B => X"0B5882240282294005A218B5A8C2208083620022682C28486214408A004107C3",
-            INIT_RAM_0C => X"30000A23306229F60C097C872BF0DC719DC313554FFF7FC20030C108205A9041",
-            INIT_RAM_0D => X"FFF0D00089D089D0D0D0D00000D000D000000040F8004080B6B4041479648824",
-            INIT_RAM_0E => X"00000739CEC604DFA6FD33E9BF4FE9F1B637E6EE043EAB660000BAABBEEBF000",
-            INIT_RAM_0F => X"0011634499080C8406423211BBEDDF6EE377DBBE0177FFFF847F9F783FF00000"
+            BLK_SEL_0 => "110",
+            BLK_SEL_1 => "110",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_6_DO_o,
@@ -623,19 +1045,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_6_BLKSELA_i,
             BLKSELB => sdpb_inst_6_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_6_ADA_i,
             DI => sdpb_inst_6_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_6_ADB_i
         );
 
     sdpb_inst_7: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_0 => "111",
+            BLK_SEL_1 => "111",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_7_DO_o,
@@ -648,35 +1134,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_7_BLKSELA_i,
             BLKSELB => sdpb_inst_7_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_7_ADA_i,
             DI => sdpb_inst_7_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_7_ADB_i
         );
 
     sdpb_inst_8: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
             BLK_SEL_0 => "000",
             BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"4A2A0B1C921BB839986C0C6200189110AC06C9000CC112081282060100002683",
-            INIT_RAM_01 => X"30CC4C731350DD8612C40880090AA24445C740A938EF289147B82445163A6430",
-            INIT_RAM_02 => X"055006441028160850F8084188226202D4913002DCE013CDC026661804D3184D",
-            INIT_RAM_03 => X"000046000C040412911445A134135D0456C83E10419468B413412504852CDD04",
-            INIT_RAM_04 => X"0DA64C758EB1158C4AC44513025613A446A6660A7E8C44CD2B01567A0283506A",
-            INIT_RAM_05 => X"001224492C4001800E503940504404C113302053B211334BC6193B58EA0D502A",
-            INIT_RAM_06 => X"AC4C5162913232A93164C5EAA4C517314251208151D551933764876280800020",
-            INIT_RAM_07 => X"A4C5498AEAA4C5173142545308A360566A3CD1D8162E11352262AA9131485A98",
-            INIT_RAM_08 => X"21384D97BB000A039C002200C3D082A033498893164C7216A9522628B52268CA",
-            INIT_RAM_09 => X"F804A0A204506000E2382EAA9100155210041198C90000640C22480604801220",
-            INIT_RAM_0A => X"2490002092681042B901A04920315C1BE08C610833220318449111100600210C",
-            INIT_RAM_0B => X"1000C3C1055B021B200460C800C300138C0908380054A000C202120C001D0FFC",
-            INIT_RAM_0C => X"003F05A429D158818BD3C247DCBAE2C6E8C3AB1247E53FC5D575EAAA6AC40186",
-            INIT_RAM_0D => X"FFF8D1880088D1D1D1D100D1D100D10000000081E0000B850800F242E9D02186",
-            INIT_RAM_0E => X"30C304A128BDC7FFBFFDFFEFFF4F89FDEF3DC79E07F8D5E70000AEAFAEBAE000",
-            INIT_RAM_0F => X"A81BCA118BBA05DD02EEB77D908C87643B21D908015554403200000000002AAA"
+            INIT_RAM_00 => X"A88F80D05820A0B0CCA881F8C08A0A0982A08084080808080AFA2FD49CA80AD7",
+            INIT_RAM_01 => X"94DA1DCE888A0DFAF5401CADC806CAC806CA1F8C1F8A8C0F8A0D8CFA2C80D820",
+            INIT_RAM_02 => X"3C091C8AE1D21D0C02CAFB48AF94885AC88002CACC0DDC8E184180A1844DE6A2",
+            INIT_RAM_03 => X"E18018180AD8D2FA080ADC1708215D20F0ADE0308201D2DDDCDBDC080ADDDEE9",
+            INIT_RAM_04 => X"8DE0A31FDA3FD20A8E180180A180AD8D00ADE1D0821FD21A0DDC0D0820FD22A8",
+            INIT_RAM_05 => X"4DE6ADC1FD20A1DDAD80A20AD8D2FA030A1DD20A19DE1B1F0CDADE8E180180A1",
+            INIT_RAM_06 => X"0A6F02DAF32E4180A0A0D0C0F02CA0A0A8C2180D8AE81AD8F2DA8E180180A184",
+            INIT_RAM_07 => X"A0FD24A2DDC0BDCCCDA0FD22A3DDE0BDC88DA0FD21AD80A41DC59DC5B48A0FD2",
+            INIT_RAM_08 => X"DB0A0A2CA0F0C1B0C3B0C7F02EA7D82EA080ADE0BDCDA0FD28A1F080ADC0BDCD",
+            INIT_RAM_09 => X"DBAB6302FE2B802FE23FEC44444EA4F0D943F180FDB0A0A2CA0F0C53F180D90D",
+            INIT_RAM_0A => X"0F0D4EE031FDB0AE844412EA21ECEE0D9CA01820A0D0A0D0C1DCA0D0C02EA2D0",
+            INIT_RAM_0B => X"8C8C8FAF8F4BA024448A0DDA0DCA094E8A0D0CCAE8F4BA02EAE18D90AEC0B8EC",
+            INIT_RAM_0C => X"402DA0DFEBA4402DA0F02DAD8A80096ED80EADA3081AF188B90B9FA5A0AC8FAC",
+            INIT_RAM_0D => X"AD81E3DA1F02DA088A3DFFBA444128AC8FA084A1F02DAD80E3D8DAC8DE3FEBA4",
+            INIT_RAM_0E => X"FE2DA0AD880DAD880DAC8DE3FEBA402DA0DFEBA4402DA0F32DA1DFEBA4444328",
+            INIT_RAM_0F => X"00000000000688C40908AF140808CA280808FD08A6A0AB80A2808DA2808FE2DA",
+            INIT_RAM_10 => X"8CBC1CFDC08828018F0BAFB0E3FBBA18080808FAF64EE4DD8DAF44E023D0D8DA",
+            INIT_RAM_11 => X"CB08CB3EB8BE8B308BB08BBA0028BA18CBB1BFDCB80E9308CB08CB08BB08BB01",
+            INIT_RAM_12 => X"818CB212FDCC8BEEABAC8BEFAC8BE8B308080A18CB414FDC8C8BE8B3B8BE8B08",
+            INIT_RAM_13 => X"006E1929F0BAEFB0E308FB4EEDDD8DAF94EEBDD8DAF3428180AF0BAFB0E0DB82",
+            INIT_RAM_14 => X"FDC08F9428CBF2418CBF1EFDCBCF34EE1DD8DAF64E025D0D8DAF44E024D0D8DA",
+            INIT_RAM_15 => X"08CB08BB08BB020800182828CB018CBB1AFDCCFC08CB08CB08BB08BB018CBC1B",
+            INIT_RAM_16 => X"0808FFB08F0BA48A08FFB08FEBCAE080A1818088AD0C018EE0A08DAA1DC808CB",
+            INIT_RAM_17 => X"00000000000F64D800DA010A0D02DA090CDA130A0982A08080A0808DD8EEEEEE",
+            INIT_RAM_18 => X"8CB18BB18BBA4BA0D2808BB18BBC2818182808081A08080A080828280AB80A08",
+            INIT_RAM_19 => X"A3A062B8CDAFA40F02D8C002DA628281818180AD1BC18181818BAACBB8CBACB1",
+            INIT_RAM_1A => X"0CF720EDA3DA0F0CF720EDA3191EDAD872DA0D0CF720EDA3A06DA11F0CF720ED",
+            INIT_RAM_1B => X"D2DA1F0C0F0CF720EDA3A06DA1D820D2DA0F0C2F0CF72EDA0E390CDAD8B2DA0D",
+            INIT_RAM_1C => X"A0D0C0F0CF720EDA3EDAD810DA0D0C2F0CF720E32B6CDAA06DA1D8D2DA0DD820",
+            INIT_RAM_1D => X"03DCDAD806113DC03DCD80611F0FBA4440EDA3D806DA15F420AD8E2DA0DD810D",
+            INIT_RAM_1E => X"0CF720EDA3A062B8CDAD8F002DAFC0F90A88180A18180A1F0FBA4440EDA303DC",
+            INIT_RAM_1F => X"B2DA0D0CF720EDA3CDA0F0CF720EDA3C191EDAD872DA0D0CF720EDA3A06DA11F",
+            INIT_RAM_20 => X"D2DAF44D8F2DA0D0C0F0CF720EDA3A06DA1D8F2DA0D0C2F0CF72DA0E390CDAD8",
+            INIT_RAM_21 => X"4231E83B8F24F04FD08AD8E2DA0F0CF720EDA3DA0D0CF720E31B6CDAA06DA1D8",
+            INIT_RAM_22 => X"BC8F1BA0C8C80AC8C8F880DCA02CA602FD8440FF3BCB0AC8FAC808BAB6144A44",
+            INIT_RAM_23 => X"AE90ECEFE0FF9000CBE2DFAFDC090FF5BCBF1CD90A8E888888E8D8D8880AC8F1",
+            INIT_RAM_24 => X"2A6E93ECE89664F2CBE896600002CB10A0AC8FA2F0CCA880A881A0F0C0F02CA0",
+            INIT_RAM_25 => X"AC83AC82AC82AB82AC8B80A1DCAF1880B90AFA698886A886A888888CAF1C896A",
+            INIT_RAM_26 => X"F3BA02BAC8F3BA4444F2DFDCB8B6BAB0F0AB80AB802CAC80AC81AB81AB81A4D4",
+            INIT_RAM_27 => X"B9F3BA0224444F20BCBA44A0BAB80AF020808FA0818180808FD08A080A088AC8",
+            INIT_RAM_28 => X"8FC4038CF64FA2030A0D8C0F8A0982A08080AFDC08AA080808F02C8B80AE1BC0",
+            INIT_RAM_29 => X"9B1AE8EAF80A1B2C291C88C986A0D2C8C0D3C0F3C0F4C0F4C886A0D5C8A5D0C8",
+            INIT_RAM_2A => X"18FFBA0F0244440BFCBA48A885A018CFC0D0C886A0D1C8A9898F5BA028AF1C99",
+            INIT_RAM_2B => X"00966960960900644640640600120420560B609609905A860061848C0F8A881A",
+            INIT_RAM_2C => X"13800252400000100001001680023D2000000000000331212208111111111100",
+            INIT_RAM_2D => X"10025F8000001001000012600239700000000000034183025050000000000000",
+            INIT_RAM_2E => X"2292400000000100013220027D2010000000000255400255A000000000010431",
+            INIT_RAM_2F => X"00010000000000043160029971000001000003418501B0510000001000013233",
+            INIT_RAM_30 => X"7F0F0D2F0F7D2F0FBB7076343454343405B07070BB0001000000004512002DF8",
+            INIT_RAM_31 => X"DBF0D600770000DBF0F0F0992207009027002F7D7F300F6B00FFFDFFBB002F0D",
+            INIT_RAM_32 => X"3A0030DDFF0F00DBF300023009000F3F9F0F7B02F2DBF0F0BB700AF0D70003F0",
+            INIT_RAM_33 => X"002000000055555540000D0F3030AF0000F2F00F3B27000B23033A2036000007",
+            INIT_RAM_34 => X"0000100000242200195D00100100001013321227BB010000001000011442275A",
+            INIT_RAM_35 => X"C84C000400000000000000005A000005B976ECCC000000000000181112204101",
+            INIT_RAM_36 => X"F96F000531230001C84C000431230001F96F0005000000003123000100000000",
+            INIT_RAM_37 => X"7777777777777640312300013000300200000000F84C3006F96F0005F96F0005",
+            INIT_RAM_38 => X"0000000000000000F4F2F1F0F0FEFDFBFAF8F7F6F4F3F2F07310000000000000",
+            INIT_RAM_39 => X"3136733720131365114201313663111000000DDDDDDDDE0CFFEFEFEFDDDEEDDD",
+            INIT_RAM_3A => X"3033137333333303313733333330331373333333012657377600566733333301",
+            INIT_RAM_3B => X"001100001F0000F100000102B0102C0102D0102E30D1130DFF00033137333333",
+            INIT_RAM_3C => X"445544544E8C8E4AAA4AEAAA68AA68888EAAA448888E0000089ABCDEF0123456",
+            INIT_RAM_3D => X"AAB3301BCABA8AAB910138EBA8AAB8A000000007C707C7C7C70707CCC7000004",
+            INIT_RAM_3E => X"00000014755455545013AFBBABBBBB09F8ABA8AEF6001BCABA8AAB9109F8ABA8",
+            INIT_RAM_3F => X"F0F0F000000BBA9BDBAA98766887666112245499901110100004654559899101"
         )
         port map (
             DO => sdpb_inst_8_DO_o,
@@ -689,19 +1223,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_8_BLKSELA_i,
             BLKSELB => sdpb_inst_8_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_8_ADA_i,
             DI => sdpb_inst_8_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_8_ADB_i
         );
 
     sdpb_inst_9: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
             BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_1 => "001",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_9_DO_o,
@@ -714,35 +1312,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_9_BLKSELA_i,
             BLKSELB => sdpb_inst_9_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_9_ADA_i,
             DI => sdpb_inst_9_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_9_ADB_i
         );
 
     sdpb_inst_10: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "000",
-            BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"80471122AA44104681905CC10501020F1113821454514382902A221460007C25",
-            INIT_RAM_01 => X"AB082BCA0AA2009575F0A0AA9064D40838A88D1D451515022D754088285500AE",
-            INIT_RAM_02 => X"075A111141ADE0CA46AB07AC2288083C7DF3F81A18AB518056A266F38A8AA888",
-            INIT_RAM_03 => X"00100C0608ECC31DEA0823F29E2BA7868D546F0A62A8C47E29E2AA431B1896A6",
-            INIT_RAM_04 => X"32BECD83387437A50D87E79B04441BB447B6672C6C9444CC22085EFC03D832C1",
-            INIT_RAM_05 => X"001811141518203F0E5939D88081A30113340A4362113309849C365B07503281",
-            INIT_RAM_06 => X"544EBA89533D61343AD4EB14D0EBA93AEE39417402401D9A2676466820410A64",
-            INIT_RAM_07 => X"D0EB29D614D0EBA93AEE24B2410570B44448825C2C52A6808275D0433BE6A142",
-            INIT_RAM_08 => X"CBB07706B0502012960420AD83D4C3C46B691353AD0ED9A85868275D46867584",
-            INIT_RAM_09 => X"BD86B2E686004444F73C34BEB3288CC8999D92309E1980C3F69B6614A7888A2A",
-            INIT_RAM_0A => X"1A424912590520513D41B221018216B05B9680641322182044DD41460C302934",
-            INIT_RAM_0B => X"0000A4800408000FD00039A00104800214000668004500004500011A001AC000",
-            INIT_RAM_0C => X"200001AC39F1DEC1C8D1C6075DDAE64664C1A8D0CEE73BCCD36DEE8A2AC0004A",
-            INIT_RAM_0D => X"FFFCB0890089B0B0B0B000B0B000B00000000040B8000060002C000077C0001D",
-            INIT_RAM_0E => X"004201884384C6FFB7FDBFEDFF37C7FCBF9612F00004FF180000BABBEFBEC000",
-            INIT_RAM_0F => X"A81D739E6000080000801FFCBBC5DC2EF9770BBA015554400045DFB878101999"
+            BLK_SEL_0 => "010",
+            BLK_SEL_1 => "010",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_10_DO_o,
@@ -755,19 +1401,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_10_BLKSELA_i,
             BLKSELB => sdpb_inst_10_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_10_ADA_i,
             DI => sdpb_inst_10_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_10_ADB_i
         );
 
     sdpb_inst_11: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_0 => "011",
+            BLK_SEL_1 => "011",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_11_DO_o,
@@ -780,35 +1490,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_11_BLKSELA_i,
             BLKSELB => sdpb_inst_11_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_11_ADA_i,
             DI => sdpb_inst_11_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_11_ADB_i
         );
 
     sdpb_inst_12: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "000",
-            BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"802A0D0C980BEC3E44A52A5282DD207C6706E59A654516481280C28001002743",
-            INIT_RAM_01 => X"34E7CC399311774632980A902122A401F6C340A818316D00619840051A187430",
-            INIT_RAM_02 => X"5561C66316B0A4635E31723D4022B29288C19FF6A8C0968981288E5906730867",
-            INIT_RAM_03 => X"001305080C40041AD11456C939924E784A481CE14494AAD99399250394080515",
-            INIT_RAM_04 => X"308C8BF576A8112810F3134800AF48108910000087108800578044A002FF5E2A",
-            INIT_RAM_05 => X"001E2048600001BF0C4431A800518462200000843F220014E52A57B76BCD5E6A",
-            INIT_RAM_06 => X"A55CC322957646897325CC1AA5CC317308D528A0012002244008801000000000",
-            INIT_RAM_07 => X"25CCCB991AA5CC317308D45A00014EC33A467253B26715312AE668957238CA98",
-            INIT_RAM_08 => X"4FB0ADC756102A0A50A2A314DB22A05B885B8A97325C8E32AF52AE61952AE91A",
-            INIT_RAM_09 => X"207C4C020400600280A3EF1080144007444040D00A110152339EA60814B002A4",
-            INIT_RAM_0A => X"1A43ED04C9092540313CC843A92818140A81124AAABB939A71F0150007002412",
-            INIT_RAM_0B => X"0001208002420000080000C000E300040C0002080020A0000280010400000000",
-            INIT_RAM_0C => X"003F85042910004103D2800558AA22C2ACC2A81047C63F05D5752D754A000306",
-            INIT_RAM_0D => X"FFFE000000B1B1B1B100B100B1000000B10000813F0000080010300001000066",
-            INIT_RAM_0E => X"004200042121C04002001000801DCF001903206007FDFFFF0000EABEAFEA8000",
-            INIT_RAM_0F => X"A800839E1C001F8001FF840081C200200080020001DFD7C1FFD6288846100787"
+            BLK_SEL_0 => "100",
+            BLK_SEL_1 => "100",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_12_DO_o,
@@ -821,19 +1579,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_12_BLKSELA_i,
             BLKSELB => sdpb_inst_12_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_12_ADA_i,
             DI => sdpb_inst_12_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_12_ADB_i
         );
 
     sdpb_inst_13: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_0 => "101",
+            BLK_SEL_1 => "101",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_13_DO_o,
@@ -846,35 +1668,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_13_BLKSELA_i,
             BLKSELB => sdpb_inst_13_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_13_ADA_i,
             DI => sdpb_inst_13_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_13_ADB_i
         );
 
     sdpb_inst_14: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "000",
-            BLK_SEL_1 => "000",
-            INIT_RAM_00 => X"A57B5C44B88BFD7F57A53DEDE3DF4A9AB7F787CF377DDF6CFA4AFBB5AA5576F6",
-            INIT_RAM_01 => X"B2EFECBBFB3A6EB65392AA9AE5F7BD2A6ECBE9EC59757F4AE9D9D2AF3A997533",
-            INIT_RAM_02 => X"FFD83775D7ECEEEF563B833DE4AABA9AF0D99C1ACAEAD4ADD5AAAA6DAEFB6AEF",
-            INIT_RAM_03 => X"000E5C5D5DAEAEBBDBDF7EF1BE1A6F81EB4DDF07EA9EBFDE1BE1A7E5DE5BDEBF",
-            INIT_RAM_04 => X"15BE9DFFBFE2B7AEB8FFFFFE55C7FEFDDDFCEF1DEFD9DDDCF7B4DEBD579BF22F",
-            INIT_RAM_05 => X"0013314D716AABFF5EDB7BFAABD3AF77777115CF7F77773DEE78F7F37E45F22F",
-            INIT_RAM_06 => X"B558E9B2D56757ED63B58E5F358E9963A3F938CAAB6ABFFEEEF6AEF555555575",
-            INIT_RAM_07 => X"B58EEB1D5F358E9963A3FC7B755570E33F06785C3B323DB9AAC77CD5625E6EDC",
-            INIT_RAM_08 => X"EFB8EFD6F77FFFDEF6F7FB98E377F7840DC9BED63B58979BB9DAAC74DDAACD5F",
-            INIT_RAM_09 => X"EC04F2F62EAAED5FB3EC2FEEBB9EEEEAEEEEFAF6DDEEFFDD5BE2F80CBEBEEAA6",
-            INIT_RAM_0A => X"2490000012660B7D7D01F7A7AEAFF677DFD55FABAAAAEAEBE3985DDAAF7567B6",
-            INIT_RAM_0B => X"0000030000880000200000400000800006000010000800002000008400001000",
-            INIT_RAM_0C => X"0000050C2941040043D38045D4BAC682E803AB0205453FC55555C00020C00007",
-            INIT_RAM_0D => X"0000000000D0D0D0D000D000D0000000D0000040CF0004000000500000C00001",
-            INIT_RAM_0E => X"004200842121C00000000000000000000000000007FDFFFF0000AABFFAAA0000",
-            INIT_RAM_0F => X"A81FFC600380007800000FFDFF87FE7FE1FF87FE008A8380007DDF77F9F07F80"
+            BLK_SEL_0 => "110",
+            BLK_SEL_1 => "110",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_14_DO_o,
@@ -887,19 +1757,83 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_14_BLKSELA_i,
             BLKSELB => sdpb_inst_14_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_14_ADA_i,
             DI => sdpb_inst_14_DI_i,
-            ADB => adb(13 downto 0)
+            ADB => sdpb_inst_14_ADB_i
         );
 
     sdpb_inst_15: SDPB
         generic map (
             READ_MODE => '0',
-            BIT_WIDTH_0 => 1,
-            BIT_WIDTH_1 => 1,
+            BIT_WIDTH_0 => 4,
+            BIT_WIDTH_1 => 4,
             RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
+            BLK_SEL_0 => "111",
+            BLK_SEL_1 => "111",
+            INIT_RAM_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_08 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_09 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_0F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_13 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_14 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_15 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_16 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_17 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_18 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_19 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_1F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_20 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_21 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_22 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_23 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_24 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_25 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_26 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_27 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_28 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_29 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_2F => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_30 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_31 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_32 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_33 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_34 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_35 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_36 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_37 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_38 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_39 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3A => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3B => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3C => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3D => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3E => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_RAM_3F => X"0000000000000000000000000000000000000000000000000000000000000000"
         )
         port map (
             DO => sdpb_inst_15_DO_o,
@@ -912,40 +1846,15 @@ begin
             OCE => oce,
             BLKSELA => sdpb_inst_15_BLKSELA_i,
             BLKSELB => sdpb_inst_15_BLKSELB_i,
-            ADA => ada(13 downto 0),
+            ADA => sdpb_inst_15_ADA_i,
             DI => sdpb_inst_15_DI_i,
-            ADB => adb(13 downto 0)
-        );
-
-    sdpb_inst_16: SDPB
-        generic map (
-            READ_MODE => '0',
-            BIT_WIDTH_0 => 8,
-            BIT_WIDTH_1 => 8,
-            RESET_MODE => "SYNC",
-            BLK_SEL_0 => "001",
-            BLK_SEL_1 => "001"
-        )
-        port map (
-            DO => sdpb_inst_16_DO_o,
-            CLKA => clka,
-            CEA => cea,
-            RESETA => reseta,
-            CLKB => clkb,
-            CEB => ceb,
-            RESETB => resetb,
-            OCE => oce,
-            BLKSELA => sdpb_inst_16_BLKSELA_i,
-            BLKSELB => sdpb_inst_16_BLKSELB_i,
-            ADA => sdpb_inst_16_ADA_i,
-            DI => sdpb_inst_16_DI_i,
-            ADB => sdpb_inst_16_ADB_i
+            ADB => sdpb_inst_15_ADB_i
         );
 
     dff_inst_0: DFFE
         port map (
             Q => dff_q_0,
-            D => adb(15),
+            D => adb(14),
             CLK => clkb,
             CE => ceb
         );
@@ -953,136 +1862,464 @@ begin
     dff_inst_1: DFFE
         port map (
             Q => dff_q_1,
-            D => adb(14),
+            D => adb(13),
             CLK => clkb,
             CE => ceb
+        );
+
+    dff_inst_2: DFFE
+        port map (
+            Q => dff_q_2,
+            D => adb(12),
+            CLK => clkb,
+            CE => ceb
+        );
+
+    mux_inst_0: MUX2
+        port map (
+            O => mux_o_0,
+            I0 => sdpb_inst_0_dout(0),
+            I1 => sdpb_inst_1_dout(0),
+            S0 => dff_q_2
+        );
+
+    mux_inst_1: MUX2
+        port map (
+            O => mux_o_1,
+            I0 => sdpb_inst_2_dout(0),
+            I1 => sdpb_inst_3_dout(0),
+            S0 => dff_q_2
+        );
+
+    mux_inst_2: MUX2
+        port map (
+            O => mux_o_2,
+            I0 => sdpb_inst_4_dout(0),
+            I1 => sdpb_inst_5_dout(0),
+            S0 => dff_q_2
+        );
+
+    mux_inst_3: MUX2
+        port map (
+            O => mux_o_3,
+            I0 => sdpb_inst_6_dout(0),
+            I1 => sdpb_inst_7_dout(0),
+            S0 => dff_q_2
+        );
+
+    mux_inst_4: MUX2
+        port map (
+            O => mux_o_4,
+            I0 => mux_o_0,
+            I1 => mux_o_1,
+            S0 => dff_q_1
+        );
+
+    mux_inst_5: MUX2
+        port map (
+            O => mux_o_5,
+            I0 => mux_o_2,
+            I1 => mux_o_3,
+            S0 => dff_q_1
+        );
+
+    mux_inst_6: MUX2
+        port map (
+            O => dout(0),
+            I0 => mux_o_4,
+            I1 => mux_o_5,
+            S0 => dff_q_0
+        );
+
+    mux_inst_7: MUX2
+        port map (
+            O => mux_o_7,
+            I0 => sdpb_inst_0_dout(1),
+            I1 => sdpb_inst_1_dout(1),
+            S0 => dff_q_2
+        );
+
+    mux_inst_8: MUX2
+        port map (
+            O => mux_o_8,
+            I0 => sdpb_inst_2_dout(1),
+            I1 => sdpb_inst_3_dout(1),
+            S0 => dff_q_2
         );
 
     mux_inst_9: MUX2
         port map (
             O => mux_o_9,
-            I0 => sdpb_inst_0_dout(0),
-            I1 => sdpb_inst_1_dout(0),
-            S0 => dff_q_1
+            I0 => sdpb_inst_4_dout(1),
+            I1 => sdpb_inst_5_dout(1),
+            S0 => dff_q_2
+        );
+
+    mux_inst_10: MUX2
+        port map (
+            O => mux_o_10,
+            I0 => sdpb_inst_6_dout(1),
+            I1 => sdpb_inst_7_dout(1),
+            S0 => dff_q_2
         );
 
     mux_inst_11: MUX2
         port map (
-            O => dout(0),
+            O => mux_o_11,
+            I0 => mux_o_7,
+            I1 => mux_o_8,
+            S0 => dff_q_1
+        );
+
+    mux_inst_12: MUX2
+        port map (
+            O => mux_o_12,
             I0 => mux_o_9,
-            I1 => sdpb_inst_16_dout(0),
+            I1 => mux_o_10,
+            S0 => dff_q_1
+        );
+
+    mux_inst_13: MUX2
+        port map (
+            O => dout(1),
+            I0 => mux_o_11,
+            I1 => mux_o_12,
+            S0 => dff_q_0
+        );
+
+    mux_inst_14: MUX2
+        port map (
+            O => mux_o_14,
+            I0 => sdpb_inst_0_dout(2),
+            I1 => sdpb_inst_1_dout(2),
+            S0 => dff_q_2
+        );
+
+    mux_inst_15: MUX2
+        port map (
+            O => mux_o_15,
+            I0 => sdpb_inst_2_dout(2),
+            I1 => sdpb_inst_3_dout(2),
+            S0 => dff_q_2
+        );
+
+    mux_inst_16: MUX2
+        port map (
+            O => mux_o_16,
+            I0 => sdpb_inst_4_dout(2),
+            I1 => sdpb_inst_5_dout(2),
+            S0 => dff_q_2
+        );
+
+    mux_inst_17: MUX2
+        port map (
+            O => mux_o_17,
+            I0 => sdpb_inst_6_dout(2),
+            I1 => sdpb_inst_7_dout(2),
+            S0 => dff_q_2
+        );
+
+    mux_inst_18: MUX2
+        port map (
+            O => mux_o_18,
+            I0 => mux_o_14,
+            I1 => mux_o_15,
+            S0 => dff_q_1
+        );
+
+    mux_inst_19: MUX2
+        port map (
+            O => mux_o_19,
+            I0 => mux_o_16,
+            I1 => mux_o_17,
+            S0 => dff_q_1
+        );
+
+    mux_inst_20: MUX2
+        port map (
+            O => dout(2),
+            I0 => mux_o_18,
+            I1 => mux_o_19,
             S0 => dff_q_0
         );
 
     mux_inst_21: MUX2
         port map (
             O => mux_o_21,
-            I0 => sdpb_inst_2_dout(1),
-            I1 => sdpb_inst_3_dout(1),
-            S0 => dff_q_1
+            I0 => sdpb_inst_0_dout(3),
+            I1 => sdpb_inst_1_dout(3),
+            S0 => dff_q_2
+        );
+
+    mux_inst_22: MUX2
+        port map (
+            O => mux_o_22,
+            I0 => sdpb_inst_2_dout(3),
+            I1 => sdpb_inst_3_dout(3),
+            S0 => dff_q_2
         );
 
     mux_inst_23: MUX2
         port map (
-            O => dout(1),
+            O => mux_o_23,
+            I0 => sdpb_inst_4_dout(3),
+            I1 => sdpb_inst_5_dout(3),
+            S0 => dff_q_2
+        );
+
+    mux_inst_24: MUX2
+        port map (
+            O => mux_o_24,
+            I0 => sdpb_inst_6_dout(3),
+            I1 => sdpb_inst_7_dout(3),
+            S0 => dff_q_2
+        );
+
+    mux_inst_25: MUX2
+        port map (
+            O => mux_o_25,
             I0 => mux_o_21,
-            I1 => sdpb_inst_16_dout(1),
+            I1 => mux_o_22,
+            S0 => dff_q_1
+        );
+
+    mux_inst_26: MUX2
+        port map (
+            O => mux_o_26,
+            I0 => mux_o_23,
+            I1 => mux_o_24,
+            S0 => dff_q_1
+        );
+
+    mux_inst_27: MUX2
+        port map (
+            O => dout(3),
+            I0 => mux_o_25,
+            I1 => mux_o_26,
             S0 => dff_q_0
+        );
+
+    mux_inst_28: MUX2
+        port map (
+            O => mux_o_28,
+            I0 => sdpb_inst_8_dout(4),
+            I1 => sdpb_inst_9_dout(4),
+            S0 => dff_q_2
+        );
+
+    mux_inst_29: MUX2
+        port map (
+            O => mux_o_29,
+            I0 => sdpb_inst_10_dout(4),
+            I1 => sdpb_inst_11_dout(4),
+            S0 => dff_q_2
+        );
+
+    mux_inst_30: MUX2
+        port map (
+            O => mux_o_30,
+            I0 => sdpb_inst_12_dout(4),
+            I1 => sdpb_inst_13_dout(4),
+            S0 => dff_q_2
+        );
+
+    mux_inst_31: MUX2
+        port map (
+            O => mux_o_31,
+            I0 => sdpb_inst_14_dout(4),
+            I1 => sdpb_inst_15_dout(4),
+            S0 => dff_q_2
+        );
+
+    mux_inst_32: MUX2
+        port map (
+            O => mux_o_32,
+            I0 => mux_o_28,
+            I1 => mux_o_29,
+            S0 => dff_q_1
         );
 
     mux_inst_33: MUX2
         port map (
             O => mux_o_33,
-            I0 => sdpb_inst_4_dout(2),
-            I1 => sdpb_inst_5_dout(2),
+            I0 => mux_o_30,
+            I1 => mux_o_31,
             S0 => dff_q_1
+        );
+
+    mux_inst_34: MUX2
+        port map (
+            O => dout(4),
+            I0 => mux_o_32,
+            I1 => mux_o_33,
+            S0 => dff_q_0
         );
 
     mux_inst_35: MUX2
         port map (
-            O => dout(2),
-            I0 => mux_o_33,
-            I1 => sdpb_inst_16_dout(2),
+            O => mux_o_35,
+            I0 => sdpb_inst_8_dout(5),
+            I1 => sdpb_inst_9_dout(5),
+            S0 => dff_q_2
+        );
+
+    mux_inst_36: MUX2
+        port map (
+            O => mux_o_36,
+            I0 => sdpb_inst_10_dout(5),
+            I1 => sdpb_inst_11_dout(5),
+            S0 => dff_q_2
+        );
+
+    mux_inst_37: MUX2
+        port map (
+            O => mux_o_37,
+            I0 => sdpb_inst_12_dout(5),
+            I1 => sdpb_inst_13_dout(5),
+            S0 => dff_q_2
+        );
+
+    mux_inst_38: MUX2
+        port map (
+            O => mux_o_38,
+            I0 => sdpb_inst_14_dout(5),
+            I1 => sdpb_inst_15_dout(5),
+            S0 => dff_q_2
+        );
+
+    mux_inst_39: MUX2
+        port map (
+            O => mux_o_39,
+            I0 => mux_o_35,
+            I1 => mux_o_36,
+            S0 => dff_q_1
+        );
+
+    mux_inst_40: MUX2
+        port map (
+            O => mux_o_40,
+            I0 => mux_o_37,
+            I1 => mux_o_38,
+            S0 => dff_q_1
+        );
+
+    mux_inst_41: MUX2
+        port map (
+            O => dout(5),
+            I0 => mux_o_39,
+            I1 => mux_o_40,
             S0 => dff_q_0
+        );
+
+    mux_inst_42: MUX2
+        port map (
+            O => mux_o_42,
+            I0 => sdpb_inst_8_dout(6),
+            I1 => sdpb_inst_9_dout(6),
+            S0 => dff_q_2
+        );
+
+    mux_inst_43: MUX2
+        port map (
+            O => mux_o_43,
+            I0 => sdpb_inst_10_dout(6),
+            I1 => sdpb_inst_11_dout(6),
+            S0 => dff_q_2
+        );
+
+    mux_inst_44: MUX2
+        port map (
+            O => mux_o_44,
+            I0 => sdpb_inst_12_dout(6),
+            I1 => sdpb_inst_13_dout(6),
+            S0 => dff_q_2
         );
 
     mux_inst_45: MUX2
         port map (
             O => mux_o_45,
-            I0 => sdpb_inst_6_dout(3),
-            I1 => sdpb_inst_7_dout(3),
+            I0 => sdpb_inst_14_dout(6),
+            I1 => sdpb_inst_15_dout(6),
+            S0 => dff_q_2
+        );
+
+    mux_inst_46: MUX2
+        port map (
+            O => mux_o_46,
+            I0 => mux_o_42,
+            I1 => mux_o_43,
             S0 => dff_q_1
         );
 
     mux_inst_47: MUX2
         port map (
-            O => dout(3),
-            I0 => mux_o_45,
-            I1 => sdpb_inst_16_dout(3),
-            S0 => dff_q_0
-        );
-
-    mux_inst_57: MUX2
-        port map (
-            O => mux_o_57,
-            I0 => sdpb_inst_8_dout(4),
-            I1 => sdpb_inst_9_dout(4),
+            O => mux_o_47,
+            I0 => mux_o_44,
+            I1 => mux_o_45,
             S0 => dff_q_1
         );
 
-    mux_inst_59: MUX2
-        port map (
-            O => dout(4),
-            I0 => mux_o_57,
-            I1 => sdpb_inst_16_dout(4),
-            S0 => dff_q_0
-        );
-
-    mux_inst_69: MUX2
-        port map (
-            O => mux_o_69,
-            I0 => sdpb_inst_10_dout(5),
-            I1 => sdpb_inst_11_dout(5),
-            S0 => dff_q_1
-        );
-
-    mux_inst_71: MUX2
-        port map (
-            O => dout(5),
-            I0 => mux_o_69,
-            I1 => sdpb_inst_16_dout(5),
-            S0 => dff_q_0
-        );
-
-    mux_inst_81: MUX2
-        port map (
-            O => mux_o_81,
-            I0 => sdpb_inst_12_dout(6),
-            I1 => sdpb_inst_13_dout(6),
-            S0 => dff_q_1
-        );
-
-    mux_inst_83: MUX2
+    mux_inst_48: MUX2
         port map (
             O => dout(6),
-            I0 => mux_o_81,
-            I1 => sdpb_inst_16_dout(6),
+            I0 => mux_o_46,
+            I1 => mux_o_47,
             S0 => dff_q_0
         );
 
-    mux_inst_93: MUX2
+    mux_inst_49: MUX2
         port map (
-            O => mux_o_93,
+            O => mux_o_49,
+            I0 => sdpb_inst_8_dout(7),
+            I1 => sdpb_inst_9_dout(7),
+            S0 => dff_q_2
+        );
+
+    mux_inst_50: MUX2
+        port map (
+            O => mux_o_50,
+            I0 => sdpb_inst_10_dout(7),
+            I1 => sdpb_inst_11_dout(7),
+            S0 => dff_q_2
+        );
+
+    mux_inst_51: MUX2
+        port map (
+            O => mux_o_51,
+            I0 => sdpb_inst_12_dout(7),
+            I1 => sdpb_inst_13_dout(7),
+            S0 => dff_q_2
+        );
+
+    mux_inst_52: MUX2
+        port map (
+            O => mux_o_52,
             I0 => sdpb_inst_14_dout(7),
             I1 => sdpb_inst_15_dout(7),
+            S0 => dff_q_2
+        );
+
+    mux_inst_53: MUX2
+        port map (
+            O => mux_o_53,
+            I0 => mux_o_49,
+            I1 => mux_o_50,
             S0 => dff_q_1
         );
 
-    mux_inst_95: MUX2
+    mux_inst_54: MUX2
+        port map (
+            O => mux_o_54,
+            I0 => mux_o_51,
+            I1 => mux_o_52,
+            S0 => dff_q_1
+        );
+
+    mux_inst_55: MUX2
         port map (
             O => dout(7),
-            I0 => mux_o_93,
-            I1 => sdpb_inst_16_dout(7),
+            I0 => mux_o_53,
+            I1 => mux_o_54,
             S0 => dff_q_0
         );
 

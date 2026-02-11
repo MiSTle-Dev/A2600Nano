@@ -39,9 +39,9 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb.vhd
-add_file src/a2600_top_tp20k.vhd
-add_file src/a2600_top_tp20k.cst
-add_file src/a2600_top_tp20k.sdc
+add_file src/tang/primer20k/a2600_top_tp20k.vhd
+add_file src/tang/primer20k/a2600_top_tp20k.cst
+add_file src/tang/primer20k/a2600_top_tp20k.sdc
 add_file src/video_stabilize.sv
 add_file src/detect2600.sv
 
@@ -58,9 +58,7 @@ set_option -print_all_synthesis_warning 1
 set_option -rw_check_on_ram 0
 set_option -user_code 00000001
 set_option -bit_security 0
-set_option -multi_boot 1
-# for special ESP32 Programmer
-#set_option -mspi_jump 100000
+set_option -multi_boot 0
 
 #run syn
 run all

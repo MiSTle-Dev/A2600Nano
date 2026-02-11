@@ -41,7 +41,9 @@ add_file src/a2600_top_tm138k_pro.vhd
 add_file src/a2600_top_tm138k_pro.cst
 add_file src/a2600_top_tm138k_pro.sdc
 add_file src/video_stabilize.sv
-add_file src/gowin_pll/gowin_pll_ntsc_138k_pro.vhd
+add_file src/tang/mega138kpro/gowin_pll_ntsc_138k_pro.vhd
+add_file src/tang/mega138kpro/gowin_pll_ntsc_138k_pro_mod.vhd
+add_file src/tang/mega138kpro/pll_init.v
 add_file src/detect2600.sv
 add_file src/dualshock2.v
 add_file src/misc/ws2812.v

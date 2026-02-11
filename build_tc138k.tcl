@@ -41,7 +41,9 @@ add_file src/tang/console138k/a2600_top_tc60k.vhd
 add_file src/tang/console138k/a2600_top_tc60k.cst
 add_file src/tang/console138k/a2600_top_tc60k.sdc
 add_file src/video_stabilize.sv
-add_file src/gowin_pll/gowin_pll_ntsc_138k.vhd
+add_file src/tang/console138k/pll_init.v
+add_file src/tang/console138k/gowin_pll_ntsc_138k.vhd
+add_file src/tang/console138k/gowin_pll_ntsc_138k_mod.vhd
 add_file src/detect2600.sv
 add_file src/dualshock2.v
 

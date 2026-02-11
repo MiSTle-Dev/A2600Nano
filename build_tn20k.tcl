@@ -39,9 +39,9 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb.vhd
-add_file src/a2600_top_tn20k.vhd
-add_file src/a2600_top_tn20k.cst
-add_file src/a2600_top_tn20k.sdc
+add_file src/tang/nano20k/a2600_top_tn20k.vhd
+add_file src/tang/nano20k/a2600_top_tn20k.cst
+add_file src/tang/nano20k/a2600_top_tn20k.sdc
 add_file src/video_stabilize.sv
 add_file src/detect2600.sv
 
@@ -52,9 +52,6 @@ set_option -vhdl_std vhd2008
 set_option -top_module A2600_top
 set_option -use_mspi_as_gpio 1
 set_option -use_sspi_as_gpio 1
-set_option -use_done_as_gpio 0
-set_option -use_ready_as_gpio 0
-set_option -use_jtag_as_gpio 0
 set_option -print_all_synthesis_warning 1
 set_option -rw_check_on_ram 0
 set_option -user_code 00000001

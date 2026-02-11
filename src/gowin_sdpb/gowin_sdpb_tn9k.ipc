@@ -1,6 +1,6 @@
 [General]
-ipc_version=4
 file=gowin_sdpb_tn9k
+ipc_version=4
 module=Gowin_SDPB
 target_device=gw1nr9c-004
 type=ram_sdpb
@@ -8,12 +8,12 @@ version=1.0
 
 [Config]
 BYTE_SIZE=0
-DEPTH_A=34816
-DEPTH_B=34816
+DEPTH_A=32768
+DEPTH_B=32768
+DIMENSION_MATCH=65
 LANG=1
+MEM_FILE=dummy.mi
 READ=0
 RESET_MODE=true
 WIDTH_A=8
 WIDTH_B=8
-DIMENSION_MATCH=65
-MEM_FILE=Hunchy II_ii_ntsc_tn9k.mi

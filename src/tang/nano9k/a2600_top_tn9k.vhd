@@ -1128,7 +1128,7 @@ end process;
 ram_inst: entity work.Gowin_SDPB
   port map (
       dout   => rom_do,
-      adb    => rom_a,
+      adb    => rom_a(14 downto 0),
       ceb    => '1',
       clkb   => clk_cpu,
       resetb => '0',
@@ -1137,7 +1137,7 @@ ram_inst: entity work.Gowin_SDPB
       clka   => clk,
       cea    => dl_wr,
       reseta => '0',
-      ada    => dl_addr,
+      ada    => dl_addr(14 downto 0),
       din    => dl_data
   );
 

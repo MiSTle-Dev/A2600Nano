@@ -38,9 +38,9 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb_tn9k.vhd
-add_file src/a2600_top_tn9k.vhd
-add_file src/a2600_top_tn9k.cst
-add_file src/a2600_top_tn9k.sdc
+add_file src/tang/nano9k/a2600_top_tn9k.vhd
+add_file src/tang/nano9k/a2600_top_tn9k.cst
+add_file src/tang/nano9k/a2600_top_tn9k.sdc
 add_file src/video_stabilize.sv
 add_file src/detect2600.sv
 
@@ -55,7 +55,7 @@ set_option -print_all_synthesis_warning 1
 set_option -rw_check_on_ram 0
 set_option -user_code 00000001
 set_option -bit_compress 1
-set_option -multi_boot 1
+set_option -multi_boot 0
 set_option -mspi_jump 0
 
 #run syn

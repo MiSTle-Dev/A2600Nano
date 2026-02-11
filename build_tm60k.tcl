@@ -20,7 +20,7 @@ add_file src/misc/sd_card.v
 add_file src/misc/sd_rw.v
 add_file src/misc/sdcmd_ctrl.v
 add_file src/misc/sysctrl.v
-add_file src/misc/video.v
+add_file src/misc/video_tc.v
 add_file src/misc/video_analyzer.v
 add_file src/t65/T65.vhd
 add_file src/t65/T65_ALU.vhd
@@ -37,11 +37,13 @@ add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
 add_file src/gowin_sdpb/gowin_sdpb_gw5a.vhd
-add_file src/a2600_top_tm60k.vhd
-add_file src/a2600_top_tm60k.cst
-add_file src/a2600_top_tm60k.sdc
+add_file src/tang/mega60k/a2600_top_tm60k.vhd
+add_file src/tang/mega60k/a2600_top_tm60k.cst
+add_file src/tang/mega60k/a2600_top_tm60k.sdc
 add_file src/video_stabilize.sv
-add_file src/gowin_pll/gowin_pll_ntsc_60k.vhd
+add_file src/tang/console60k/pll_init.v
+add_file src/tang/console60k/gowin_pll_ntsc_60k.vhd
+add_file src/tang/console60k/gowin_pll_ntsc_60k_mod.vhd
 add_file src/detect2600.sv
 add_file src/dualshock2.v
 add_file src/misc/ws2812.v

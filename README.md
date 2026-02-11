@@ -15,9 +15,6 @@ The A2600Nano is a port of the [MiSTer](https://github.com/MiSTer-devel/Atari260
 
 This project relies on a µC being connected to the FPGA. --> [MiSTle-Dev wiki](https://github.com/MiSTle-Dev/.github/wiki) <--  
 
-> [!NOTE]
-> If you don't need the WIFI modem on a TN20K then even the onboard BL616 µC (normally used for bitstream programming) can be used. A dedicated FPGA bitstream and FPGA companion firmware is needed in that configuration. The onboard BL616 µC is presently supported for TN20K, Console 60K /138k , Mega 138k Pro and Primer 25k board.
-
 [A2600 specific 3D Case for the MiSTeryShield20k](https://github.com/MiSTle-Dev/A2600Nano/tree/main/housing3D)
 
 Original A2600 core by [Retromaster](https://retromaster.wordpress.com/a2601/)  
