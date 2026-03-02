@@ -14,8 +14,7 @@ entity A2600_top is
   port
   (
     bl616_jtagsel : in std_logic;
-    jtagseln    : out std_logic := '0';
-    reconfign   : out std_logic := 'Z';
+    jtagseln    : out std_logic;
     clk_50mhz   : in std_logic; -- XO
     key_n       : in std_logic_vector(3 downto 0);
     key_som_n   : in std_logic; -- SOM button
@@ -333,14 +332,13 @@ begin
 -- enable JTAG if any button has been pressed during boot and also once
 -- the external FPGA Companion has been seen
   jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
-  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
   twimux <= "100"; -- connect BL616 TWI4 PLL1
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  process (clk)
+  process (clk_50mhz)
   begin
-    if rising_edge(clk) then
+    if rising_edge(clk_50mhz) then
       if pll_locked = '0' then
         spi_ext <= '0';
       elsif pmod_companion_ss = '0' then
@@ -349,9 +347,15 @@ begin
     end if;
   end process;
 
-  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
-  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
-  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+--  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+--  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else '1' when jtagseln = '0' else spi_csn;
+--  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+--  spi_dir <= '1' when jtagseln = '0' else spi_io_dout;
+--  spi_irqn <= '1' when jtagseln = '0' else spi_intn;
+
+  spi_io_din <= spi_dat;
+  spi_io_ss <= spi_csn;
+  spi_io_clk <= spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
   pmod_companion_dout <= spi_io_dout;
@@ -359,7 +363,7 @@ begin
 
   somleds_n <=  not somleds;
   somleds(0) <= not jtagseln;
-  somleds(1) <= not reconfign;  
+  somleds(1) <= bl616_jtagsel;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -886,7 +890,7 @@ end process;
 mcu_spi_inst: entity work.mcu_spi 
 port map (
   clk            => clk,
-  reset          => not pll_locked,
+  reset          => not jtagseln,
   -- SPI interface to BL616 MCU
   spi_io_ss      => spi_io_ss,      -- SPI CSn
   spi_io_clk     => spi_io_clk,     -- SPI SCLK
@@ -952,7 +956,7 @@ module_inst: entity work.sysctrl
  port map 
  (
   clk                 => clk,
-  reset               => not pll_locked,
+  reset               => not jtagseln,
 --
   data_in_strobe      => mcu_sys_strobe,
   data_in_start       => mcu_start,

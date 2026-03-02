@@ -15,7 +15,6 @@ entity A2600_top is
   (
     bl616_jtagsel : in std_logic;
     jtagseln    : out std_logic := '0';
-    reconfign   : out std_logic := 'Z';
     clk_50mhz   : in std_logic; -- XO
     key_reset_n : in std_logic; -- S2 button
     key_user_n  : in std_logic; -- S1 button
@@ -326,7 +325,6 @@ begin
   -- enable JTAG if any button has been pressed during boot and also once
   -- the external FPGA Companion has been seen
   jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
-  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 

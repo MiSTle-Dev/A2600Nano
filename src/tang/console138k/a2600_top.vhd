@@ -15,7 +15,6 @@ entity A2600_top is
   (
     bl616_jtagsel : in std_logic;
     jtagseln    : out std_logic := '0';
-    reconfign   : out std_logic := 'Z';
     clk_50mhz   : in std_logic; -- XO
     key_reset_n : in std_logic; -- S2 button
     key_user_n  : in std_logic; -- S1 button
@@ -173,7 +172,7 @@ signal sd_change      : std_logic;
 signal sdc_int        : std_logic;
 signal sdc_iack       : std_logic;
 signal int_ack        : std_logic_vector(7 downto 0);
-signal spi_ext        : std_logic;
+signal spi_ext        : std_logic := '0';
 signal spi_io_din     : std_logic;
 signal spi_io_ss      : std_logic;
 signal spi_io_clk     : std_logic;
@@ -326,13 +325,12 @@ begin
   -- enable JTAG if any button has been pressed during boot and also once
   -- the external FPGA Companion has been seen
   jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
-  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  process (clk)
+  process (clk_50mhz)
   begin
-    if rising_edge(clk) then
+    if rising_edge(clk_50mhz) then
       if pll_locked = '0' then
         spi_ext <= '0';
       elsif pmod_companion_ss = '0' then
@@ -341,9 +339,15 @@ begin
     end if;
   end process;
 
-  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
-  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
-  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+--  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+--  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else '1' when jtagseln = '0' else spi_csn;
+--  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+--  spi_dir <= '1' when jtagseln = '0' else spi_io_dout;
+--  spi_irqn <= '1' when jtagseln = '0' else spi_intn;
+
+  spi_io_din <= spi_dat;
+  spi_io_ss <= spi_csn;
+  spi_io_clk <= spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
   pmod_companion_dout <= spi_io_dout;
@@ -526,7 +530,7 @@ port map(
 -- core    28800000
 -- pixel    3600000
 
-mainclock: entity work.Gowin_PLL_ntsc_138k
+mainclock: entity work.Gowin_PLL_ntsc_138k_pro
     port map (
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
@@ -867,7 +871,7 @@ end process;
 mcu_spi_inst: entity work.mcu_spi 
 port map (
   clk            => clk,
-  reset          => not pll_locked,
+  reset          => not jtagseln,
   -- SPI interface to BL616 MCU
   spi_io_ss      => spi_io_ss,      -- SPI CSn
   spi_io_clk     => spi_io_clk,     -- SPI SCLK
@@ -933,7 +937,7 @@ module_inst: entity work.sysctrl
  port map 
  (
   clk                 => clk,
-  reset               => not pll_locked,
+  reset               => not jtagseln,
 --
   data_in_strobe      => mcu_sys_strobe,
   data_in_start       => mcu_start,
