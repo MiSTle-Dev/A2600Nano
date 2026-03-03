@@ -13,8 +13,10 @@ use IEEE.numeric_std.ALL;
 entity A2600_top is
   port
   (
+    O_sdram_clk : out std_logic;
+    O_sdram_cs_n : out std_logic;
     bl616_jtagsel : in std_logic;
-    jtagseln    : out std_logic := '0';
+    jtagseln    : out std_logic;
     clk_50mhz   : in std_logic; -- XO
     key_reset_n : in std_logic; -- S2 button
     key_user_n  : in std_logic; -- S1 button
@@ -172,7 +174,7 @@ signal sd_change      : std_logic;
 signal sdc_int        : std_logic;
 signal sdc_iack       : std_logic;
 signal int_ack        : std_logic_vector(7 downto 0);
-signal spi_ext        : std_logic := '0';
+signal spi_ext        : std_logic;
 signal spi_io_din     : std_logic;
 signal spi_io_ss      : std_logic;
 signal spi_io_clk     : std_logic;
@@ -315,6 +317,9 @@ end component;
 
 begin
 
+O_sdram_clk <= clk;
+O_sdram_cs_n <= '1';
+
   process (pll_locked)
   begin
     if rising_edge(pll_locked) then
@@ -328,9 +333,9 @@ begin
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  process (clk_50mhz)
+  process (clk)
   begin
-    if rising_edge(clk_50mhz) then
+    if rising_edge(clk) then
       if pll_locked = '0' then
         spi_ext <= '0';
       elsif pmod_companion_ss = '0' then
@@ -430,7 +435,7 @@ generic map (
     CLK_DIV  => 1
   )
     port map (
-    rstn            => pll_locked, 
+    rstn            => jtagseln, 
     clk             => clk,
   
     -- SD card signals
@@ -474,7 +479,7 @@ generic map
   STEREO  => false
 )
 port map(
-      pll_lock     => pll_locked, 
+      pll_lock     => jtagseln, 
       clk          => clk,
       clk_pixel_x5 => clk_pixel_x5,
       ntscmode  => '1',
@@ -530,7 +535,7 @@ port map(
 -- core    28800000
 -- pixel    3600000
 
-mainclock: entity work.Gowin_PLL_ntsc_138k_pro
+mainclock: entity work.Gowin_PLL_ntsc_138k
     port map (
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
@@ -895,7 +900,7 @@ hid_inst: entity work.hid
  port map 
  (
   clk             => clk,
-  reset           => not pll_locked,
+  reset           => not jtagseln,
   -- interface to receive user data from MCU (mouse, kbd, ...)
   data_in_strobe  => mcu_hid_strobe,
   data_in_start   => mcu_start,
@@ -971,10 +976,10 @@ module_inst: entity work.sysctrl
   port_in_data        => open,
 
   int_out_n           => spi_intn,
-  int_in              => unsigned'("0000" & sdc_int & '0' & hid_int & '0'),
+  int_in              => unsigned'(x"0" & sdc_int & '0' & hid_int & '0'),
   int_ack             => int_ack,
 
-  buttons             => unsigned'(not key_user_n & not key_reset_n), -- S2 and S1 buttons
+  buttons             => unsigned'(not key_user_n & not key_reset_n), -- S0 and S1 buttons
   leds                => system_leds, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );
@@ -1125,8 +1130,8 @@ force_bs <= force_bs_i when img_present = '1' else force_bs_lock;
 pal <= '1' when system_video_std(1 downto 0) = 2 else 
        '0' when system_video_std(1 downto 0) = 1 else 
        paldetect;
-sc  <= '1' when system_sc(1 downto 0) = 2 else 
-       '0' when system_sc(1 downto 0) = 1 else 
+sc  <= '1' when system_sc(1 downto 0) = 2 else
+       '0' when system_sc(1 downto 0) = 1 else
        scdetect when img_present = '1' else
        sc_lock;
 
