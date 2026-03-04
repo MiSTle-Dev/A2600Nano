@@ -13,8 +13,6 @@ use IEEE.numeric_std.ALL;
 entity A2600_top is
   port
   (
-    O_sdram_clk : out std_logic;
-    O_sdram_cs_n : out std_logic;
     bl616_jtagsel : in std_logic;
     jtagseln    : out std_logic;
     clk_50mhz   : in std_logic; -- XO
@@ -317,8 +315,6 @@ end component;
 
 begin
 
-O_sdram_clk <= clk;
-O_sdram_cs_n <= '1';
 
   process (pll_locked)
   begin
@@ -333,26 +329,20 @@ O_sdram_cs_n <= '1';
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  process (clk)
+  process (clk_50mhz, pll_locked)
   begin
-    if rising_edge(clk) then
-      if pll_locked = '0' then
-        spi_ext <= '0';
-      elsif pmod_companion_ss = '0' then
+    if pll_locked = '0' then
+      spi_ext <= '0';
+    elsif rising_edge(clk_50mhz) then
+      if pmod_companion_ss = '0' then
         spi_ext <= '1';
       end if;
     end if;
   end process;
 
---  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
---  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else '1' when jtagseln = '0' else spi_csn;
---  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
---  spi_dir <= '1' when jtagseln = '0' else spi_io_dout;
---  spi_irqn <= '1' when jtagseln = '0' else spi_intn;
-
-  spi_io_din <= spi_dat;
-  spi_io_ss <= spi_csn;
-  spi_io_clk <= spi_sclk;
+  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
+  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
   pmod_companion_dout <= spi_io_dout;
@@ -479,7 +469,7 @@ generic map
   STEREO  => false
 )
 port map(
-      pll_lock     => jtagseln, 
+      pll_lock     => pll_locked, 
       clk          => clk,
       clk_pixel_x5 => clk_pixel_x5,
       ntscmode  => '1',

@@ -336,26 +336,20 @@ begin
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  process (clk_50mhz)
+  process (clk_50mhz, pll_locked)
   begin
-    if rising_edge(clk_50mhz) then
-      if pll_locked = '0' then
-        spi_ext <= '0';
-      elsif pmod_companion_ss = '0' then
+    if pll_locked = '0' then
+      spi_ext <= '0';
+    elsif rising_edge(clk_50mhz) then
+      if pmod_companion_ss = '0' then
         spi_ext <= '1';
       end if;
     end if;
   end process;
 
---  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
---  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else '1' when jtagseln = '0' else spi_csn;
---  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
---  spi_dir <= '1' when jtagseln = '0' else spi_io_dout;
---  spi_irqn <= '1' when jtagseln = '0' else spi_intn;
-
-  spi_io_din <= spi_dat;
-  spi_io_ss <= spi_csn;
-  spi_io_clk <= spi_sclk;
+  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
+  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
   pmod_companion_dout <= spi_io_dout;
@@ -450,7 +444,7 @@ generic map (
     CLK_DIV  => 1
   )
     port map (
-    rstn            => pll_locked, 
+    rstn            => jtagseln, 
     clk             => clk,
   
     -- SD card signals
@@ -914,7 +908,7 @@ hid_inst: entity work.hid
  port map 
  (
   clk             => clk,
-  reset           => not pll_locked,
+  reset           => not jtagseln,
   -- interface to receive user data from MCU (mouse, kbd, ...)
   data_in_strobe  => mcu_hid_strobe,
   data_in_start   => mcu_start,
