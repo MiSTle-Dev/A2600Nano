@@ -1,7 +1,6 @@
-set_device GW5AST-LV138PG484AC1/I0 -device_version B
+set_device GW5AST-LV138PG484AC1/I0 -device_version C
 
-add_file src/gowin_dpb/gowin_dpb_track_buffer_b.v
-add_file src/gowin_dpb/sector_dpram.v
+add_file src/tang/console138k/gowin_dp/gowin_dp.v
 add_file src/hdmi/audio_clock_regeneration_packet.sv
 add_file src/hdmi/audio_info_frame.sv
 add_file src/hdmi/audio_sample_packet.sv
@@ -16,7 +15,7 @@ add_file src/misc/hid.v
 add_file src/misc/mcu_spi.v
 add_file src/misc/osd_u8g2.v
 add_file src/misc/scandoubler.v
-add_file src/misc/sd_card.v
+add_file src/tang/console138k/sd_card.v
 add_file src/misc/sd_rw.v
 add_file src/misc/sdcmd_ctrl.v
 add_file src/misc/sysctrl.v
@@ -26,7 +25,7 @@ add_file src/t65/T65.vhd
 add_file src/t65/T65_ALU.vhd
 add_file src/t65/T65_MCode.vhd
 add_file src/t65/T65_Pack.vhd
-add_file src/loader_sd_card.sv
+add_file src/tang/console138k/loader_sd_card.sv
 add_file src/A2601Core.vhd
 add_file src/A2601top.vhd
 add_file src/A6507.vhd
@@ -36,7 +35,7 @@ add_file src/TIA/NTSCLookups.vhd
 add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
-add_file src/gowin_sdpb/gowin_sdpb_gw5a.vhd
+add_file src/tang/console138k/gowin_sdp/gowin_sdp.vhd
 add_file src/tang/console138k/a2600_top.vhd
 add_file src/tang/console138k/a2600_top.cst
 add_file src/tang/console138k/a2600_top.sdc
@@ -58,6 +57,8 @@ set_option -use_done_as_gpio 1
 set_option -use_cpu_as_gpio 1
 set_option -use_ready_as_gpio 1
 set_option -use_jtag_as_gpio 1
+set_option -use_mode_as_gpio 0
+set_option -use_i2c_as_gpio 0
 set_option -print_all_synthesis_warning 1
 set_option -show_all_warn 0
 set_option -rw_check_on_ram 0
@@ -66,6 +67,13 @@ set_option -bit_security 0
 set_option -rpt_auto_place_io_info 1
 set_option -bit_compress 1
 set_option -loading_rate 70.000
+set_option -co-place_io_registers 0
+set_option -bit_incl_bsram_init 1
+set_option -ireg_in_iob 1
+set_option -oreg_in_iob 1
+set_option -ioreg_in_iob 1
+set_option -replicate_resources 0
+set_option -show_init_in_vo 0
 
 #run syn
 run all
