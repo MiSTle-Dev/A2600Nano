@@ -1,12 +1,3 @@
---Copyright (C)2014-2025 Gowin Semiconductor Corporation.
---All rights reserved.
---File Title: IP file
---Tool Version: V1.9.12
---Part Number: GW5AST-LV138PG484AC1/I0
---Device: GW5AST-138
---Device Version: B
---Created Time: Sun Feb  8 21:36:58 2026
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 

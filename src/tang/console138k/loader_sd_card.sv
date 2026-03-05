@@ -203,12 +203,12 @@ Gowin_DP trkbuf_inst_loader(
 	.clka(clk), 
 	.ocea(1'b1), 
 	.cea(1'b1), 
-	.reseta(1'b0), 
+	.reseta(system_reset[0]), 
 	.wrea(sd_rd_byte_strobe && sd_busy),// sd module
 	.clkb(clk), 
 	.oceb(1'b1), 
 	.ceb(1'b1),
-	.resetb(1'b0), 
+	.resetb(system_reset[0]), 
 	.wreb(1'b0),
 	.ada(sd_byte_index),  // sd module
 	.dina(sd_rd_data),    // sd module

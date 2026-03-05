@@ -121,7 +121,7 @@ sector_dpram #(8, 9) buffer
 `else   
 Gowin_DP buffer(
     .clka(clk),
-    .reseta(1'b0), 
+    .reseta(!rstn), 
     .cea(1'b1), 					
     .ada(outaddr), 
     .wrea((state == MCU_READ_SD) && louten), 
@@ -130,7 +130,7 @@ Gowin_DP buffer(
     .douta(inbyte_int),
 					
     .clkb(clk), 
-    .resetb(1'b0), 
+    .resetb(!rstn), 
     .ceb(1'b1), 
     .adb(mcu_tx_cnt), 
     .wreb(dinb_we), 

@@ -315,7 +315,6 @@ end component;
 
 begin
 
-
   process (pll_locked)
   begin
     if rising_edge(pll_locked) then
@@ -325,28 +324,17 @@ begin
 
   -- enable JTAG if any button has been pressed during boot and also once
   -- the external FPGA Companion has been seen
-  jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
+  jtagseln <= '1' when (not pll_locked or boot_button_detected or bl616_jtagsel) = '0' else '0';
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  process (clk_50mhz, pll_locked)
-  begin
-    if pll_locked = '0' then
-      spi_ext <= '0';
-    elsif rising_edge(clk_50mhz) then
-      if pmod_companion_ss = '0' then
-        spi_ext <= '1';
-      end if;
-    end if;
-  end process;
-
-  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
-  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
-  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
+  spi_io_din <= spi_dat;
+  spi_io_ss <= spi_csn;
+  spi_io_clk <= spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
-  pmod_companion_dout <= spi_io_dout;
-  pmod_companion_intn <= spi_intn;
+  --pmod_companion_dout <= spi_io_dout;
+  --pmod_companion_intn <= spi_intn;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -425,7 +413,7 @@ generic map (
     CLK_DIV  => 1
   )
     port map (
-    rstn            => jtagseln, 
+    rstn            => pll_locked, 
     clk             => clk,
   
     -- SD card signals
@@ -890,7 +878,7 @@ hid_inst: entity work.hid
  port map 
  (
   clk             => clk,
-  reset           => not jtagseln,
+  reset           => not pll_locked,
   -- interface to receive user data from MCU (mouse, kbd, ...)
   data_in_strobe  => mcu_hid_strobe,
   data_in_start   => mcu_start,
@@ -1155,14 +1143,14 @@ begin
    end if;
 end process;
 
-ram_inst: entity work.Gowin_SDPB
+ram_inst: entity work.Gowin_SDP
   port map (
       dout   => rom_do,
       adb    => rom_a,
       ceb    => '1',
       clkb   => clk_cpu,
       oce    => '1',
-      reset  => '0',
+      reset  => not pll_locked,
 
       clka   => clk,
       cea    => dl_wr,
