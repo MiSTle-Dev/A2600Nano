@@ -197,7 +197,7 @@ reg [1:0] system_resetD;
 	end // else: !if(reset)
 end
 
-Gowin_DP trkbuf_inst_loader(
+Gowin_DPB_track_buffer_b trkbuf_inst_loader(
 	.douta(), 
 	.doutb(ioctl_data),
 	.clka(clk), 

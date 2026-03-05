@@ -119,7 +119,7 @@ sector_dpram #(8, 9) buffer
 	.q_b(doutb)
 );
 `else   
-Gowin_DP buffer(
+sector_dpram buffer(
     .clka(clk),
     .reseta(1'b0), 
     .cea(1'b1), 					
