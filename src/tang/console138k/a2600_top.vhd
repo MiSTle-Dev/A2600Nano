@@ -45,7 +45,7 @@ entity A2600_top is
     lcd_hs      : out std_logic; -- lcd horizontal synchronization
     lcd_vs      : out std_logic; -- lcd vertical synchronization        
     lcd_de      : out std_logic; -- lcd data enable     
-    lcd_bl      : out std_logic; -- lcd backlight control
+    lcd_bl      : out std_logic :='Z'; -- lcd backlight control
     lcd_r       : out std_logic_vector(7 downto 0);  -- lcd red
     lcd_g       : out std_logic_vector(7 downto 0);  -- lcd green
     lcd_b       : out std_logic_vector(7 downto 0);  -- lcd blue
@@ -81,7 +81,7 @@ architecture Behavioral_top of A2600_top is
 signal clk            : std_logic;
 signal clk_cpu        : std_logic;
 signal clk_14         : std_logic;
-signal pll_locked     : std_logic;
+signal pll_locked     : std_logic := '0';
 signal clk_pixel_x5   : std_logic;
 attribute syn_keep : integer;
 attribute syn_keep of clk_cpu      : signal is 1;
@@ -153,14 +153,14 @@ signal mouse_strobe   : std_logic;
 signal osd_status     : std_logic;
 signal ws2812_color   : std_logic_vector(23 downto 0);
 signal system_reset   : std_logic_vector(1 downto 0);
-signal sd_img_size    : std_logic_vector(31 downto 0);
-signal sd_img_size_d  : std_logic_vector(31 downto 0);
-signal sd_img_mounted : std_logic_vector(4 downto 0);
+signal sd_img_size    : std_logic_vector(63 downto 0);
+signal sd_img_size_d  : std_logic_vector(63 downto 0);
+signal sd_img_mounted : std_logic_vector(7 downto 0);
 signal img_present    : std_logic;
 signal sc_lock        : std_logic;
 signal force_bs_lock  : std_logic_vector(4 downto 0);
-signal sd_rd          : std_logic_vector(4 downto 0);
-signal sd_wr          : std_logic_vector(4 downto 0);
+signal sd_rd          : std_logic_vector(7 downto 0) := (others => '0');
+signal sd_wr          : std_logic_vector(7 downto 0) := (others => '0');
 signal sd_lba         : std_logic_vector(31 downto 0);
 signal sd_busy        : std_logic;
 signal sd_done        : std_logic;
@@ -333,8 +333,8 @@ begin
   spi_io_clk <= spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
-  --pmod_companion_dout <= spi_io_dout;
-  --pmod_companion_intn <= spi_intn;
+  pmod_companion_dout <= spi_io_dout;
+  pmod_companion_intn <= spi_intn;
 
 gamepad_p1: entity work.dualshock2
     port map (
@@ -410,7 +410,7 @@ sdc_iack <= int_ack(3);
 
 sd_card_inst: entity work.sd_card
 generic map (
-    CLK_DIV  => 1
+    CLK_DIV  => 0
   )
     port map (
     rstn            => pll_locked, 
@@ -435,7 +435,6 @@ generic map (
     -- translate between sector/track/side and lba sector
     image_size      => sd_img_size,           -- length of image file
     image_mounted   => sd_img_mounted,
-    ioctl_file_ext  => ioctl_file_ext,
 
     -- user read sector command interface (sync with clk)
     rstart          => sd_rd,
@@ -496,7 +495,7 @@ port map(
       lcd_r    => lcd_r,
       lcd_g    => lcd_g,
       lcd_b    => lcd_b,
-      lcd_bl   => lcd_bl,
+      lcd_bl   => open, -- lcd_bl,
 
       hp_bck   => hp_bck,
       hp_ws    => hp_ws,
@@ -513,12 +512,16 @@ port map(
 -- core    28800000
 -- pixel    3600000
 
-mainclock: entity work.Gowin_PLL_ntsc_138k
+mainclock: entity work.Gowin_PLL_ntsc_138k_MOD
     port map (
       lock    => pll_locked,
       clkout0 => clk_pixel_x5,
       clkin   => clk_50mhz,
-      init_clk => clk_50mhz
+      reset   => '0',
+      icpsel  => (others => '0'),
+      lpfres  => (others => '0'),
+      lpfcap  => (others => '0')
+  --  init_clk => clk_50mhz
     );
 
 div1_inst: CLKDIV
@@ -980,10 +983,10 @@ sd_wr(4 downto 0) <= "00000";
     sd_rd_data        => sd_rd_data,
     sd_rd_byte_strobe => sd_rd_byte_strobe,
   
-    sd_img_mounted    => sd_img_mounted,
+    sd_img_mounted    => sd_img_mounted(4 downto 0),
     loader_busy       => loader_busy,
     load_crt          => load_crt,
-    sd_img_size       => sd_img_size,
+    sd_img_size       => sd_img_size(31 downto 0),
     leds              => open,
     img_select        => img_select,
     img_size_crt      => img_size_crt,
