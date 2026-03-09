@@ -36,7 +36,7 @@ add_file src/TIA/NTSCLookups.vhd
 add_file src/TIA/TIA.vhd
 add_file src/TIA/VGAColorTable.vhd
 add_file src/TIA/audio_argh2600.vhd
-add_file src/tang/console138k/gowin_sdp/gowin_sdp.vhd
+add_file src/gowin_sdpb/gowin_sdpb_gw5a.vhd
 add_file src/tang/console138k/a2600_top.vhd
 add_file src/tang/console138k/a2600_top.cst
 add_file src/tang/console138k/a2600_top.sdc

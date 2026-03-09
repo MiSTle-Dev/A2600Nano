@@ -122,14 +122,14 @@ signal mouse_strobe   : std_logic;
 signal osd_status     : std_logic;
 signal ws2812_color   : std_logic_vector(23 downto 0);
 signal system_reset   : std_logic_vector(1 downto 0);
-signal sd_img_size    : std_logic_vector(31 downto 0);
-signal sd_img_size_d  : std_logic_vector(31 downto 0);
-signal sd_img_mounted : std_logic_vector(4 downto 0);
+signal sd_img_size    : std_logic_vector(63 downto 0);
+signal sd_img_size_d  : std_logic_vector(63 downto 0);
+signal sd_img_mounted : std_logic_vector(7 downto 0);
 signal img_present    : std_logic;
 signal sc_lock        : std_logic;
 signal force_bs_lock  : std_logic_vector(4 downto 0);
-signal sd_rd          : std_logic_vector(4 downto 0);
-signal sd_wr          : std_logic_vector(4 downto 0);
+signal sd_rd          : std_logic_vector(7 downto 0);
+signal sd_wr          : std_logic_vector(7 downto 0);
 signal sd_lba         : std_logic_vector(31 downto 0);
 signal sd_busy        : std_logic;
 signal sd_done        : std_logic;
@@ -218,7 +218,6 @@ signal ioctl_wait      : std_logic := '0';
 signal dl_addr         : std_logic_vector(15 downto 0);
 signal dl_data         : std_logic_vector(7 downto 0);
 signal dl_wr           : std_logic;
-signal ioctl_file_ext  : std_logic_vector(31 downto 0) := x"00000000";
 signal rom_a           : std_logic_vector(15 downto 0);
 signal rom_do          : std_logic_vector(7 downto 0);
 signal reset2600       : std_logic;
@@ -425,7 +424,7 @@ sdc_iack <= int_ack(3);
 
 sd_card_inst: entity work.sd_card
 generic map (
-    CLK_DIV  => 1
+    CLK_DIV  => 0
   )
     port map (
     rstn            => pll_locked, 
@@ -450,7 +449,6 @@ generic map (
     -- translate between sector/track/side and lba sector
     image_size      => sd_img_size,           -- length of image file
     image_mounted   => sd_img_mounted,
-    ioctl_file_ext  => ioctl_file_ext,
 
     -- user read sector command interface (sync with clk)
     rstart          => sd_rd,
@@ -1020,12 +1018,12 @@ module_inst: entity work.sysctrl
   int_ack             => int_ack,
 
   buttons             => unsigned'(key_user & key_reset), -- S2 and S1 buttons
-  leds                => system_leds, -- two leds can be controlled from the MCU
+  leds                => open,
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );
 
-sd_rd(4) <= '0';
-sd_wr(4 downto 0) <= "00000";
+sd_rd(7 downto 4) <= x"0";
+sd_wr(7 downto 0) <= x"00";
 
   crt_inst : entity work.loader_sd_card
   port map (
@@ -1042,10 +1040,10 @@ sd_wr(4 downto 0) <= "00000";
     sd_rd_data        => sd_rd_data,
     sd_rd_byte_strobe => sd_rd_byte_strobe,
   
-    sd_img_mounted    => sd_img_mounted,
+    sd_img_mounted    => sd_img_mounted(4 downto 0),
     loader_busy       => loader_busy,
     load_crt          => load_crt,
-    sd_img_size       => sd_img_size,
+    sd_img_size       => sd_img_size(31 downto 0),
     leds(0)           => leds(0),
     img_select        => img_select,
     img_size_crt      => img_size_crt,

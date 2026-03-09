@@ -45,7 +45,7 @@ entity A2600_top is
     lcd_hs      : out std_logic; -- lcd horizontal synchronization
     lcd_vs      : out std_logic; -- lcd vertical synchronization        
     lcd_de      : out std_logic; -- lcd data enable     
-    lcd_bl      : out std_logic :='Z'; -- lcd backlight control
+    lcd_bl      : out std_logic := 'Z'; -- lcd backlight control
     lcd_r       : out std_logic_vector(7 downto 0);  -- lcd red
     lcd_g       : out std_logic_vector(7 downto 0);  -- lcd green
     lcd_b       : out std_logic_vector(7 downto 0);  -- lcd blue
@@ -159,8 +159,8 @@ signal sd_img_mounted : std_logic_vector(7 downto 0);
 signal img_present    : std_logic;
 signal sc_lock        : std_logic;
 signal force_bs_lock  : std_logic_vector(4 downto 0);
-signal sd_rd          : std_logic_vector(7 downto 0) := (others => '0');
-signal sd_wr          : std_logic_vector(7 downto 0) := (others => '0');
+signal sd_rd          : std_logic_vector(7 downto 0);
+signal sd_wr          : std_logic_vector(7 downto 0);
 signal sd_lba         : std_logic_vector(31 downto 0);
 signal sd_busy        : std_logic;
 signal sd_done        : std_logic;
@@ -172,14 +172,13 @@ signal sd_change      : std_logic;
 signal sdc_int        : std_logic;
 signal sdc_iack       : std_logic;
 signal int_ack        : std_logic_vector(7 downto 0);
-signal spi_ext        : std_logic;
+signal spi_ext        : std_logic :='0';
 signal spi_io_din     : std_logic;
 signal spi_io_ss      : std_logic;
 signal spi_io_clk     : std_logic;
 signal spi_io_dout    : std_logic;
 signal system_wide_screen : std_logic;
 signal leds           : std_logic_vector(5 downto 0);
-signal system_leds    : std_logic_vector(1 downto 0);
 signal db9_joy        : std_logic_vector(5 downto 0);
 signal hblank          : std_logic;
 signal vblank          : std_logic;
@@ -249,7 +248,6 @@ signal ioctl_wait      : std_logic := '0';
 signal dl_addr         : std_logic_vector(15 downto 0);
 signal dl_data         : std_logic_vector(7 downto 0);
 signal dl_wr           : std_logic;
-signal ioctl_file_ext  : std_logic_vector(31 downto 0) := x"00000000";
 signal rom_a           : std_logic_vector(15 downto 0);
 signal rom_do          : std_logic_vector(7 downto 0);
 signal reset2600       : std_logic;
@@ -300,6 +298,8 @@ signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
 signal spi_intn         : std_logic;
 signal boot_button_detected : std_logic := '1';
+signal cnt              : std_logic_vector(31 downto 0):= x"05000000";
+signal cnt_run          : std_logic := '1';
 
 component CLKDIV
     generic (
@@ -315,22 +315,42 @@ end component;
 
 begin
 
-  process (pll_locked)
+  process (clk_50mhz)
   begin
-    if rising_edge(pll_locked) then
-      boot_button_detected <= '1' when key_user_n = '0' or key_reset_n = '0' else '0';
+    if rising_edge(clk_50mhz) then
+      if cnt_run = '1' then
+        if cnt = 0 then
+          cnt_run <= '0';
+        else
+          cnt <= cnt - 1;
+        end if;
+      end if;
     end if;
   end process;
 
+  boot_button_detected <= cnt_run when (key_user_n and key_reset_n) = '0' else '0';
+
   -- enable JTAG if any button has been pressed during boot and also once
   -- the external FPGA Companion has been seen
-  jtagseln <= '1' when (not pll_locked or boot_button_detected or bl616_jtagsel) = '0' else '0';
+  jtagseln <= not (spi_ext or boot_button_detected or bl616_jtagsel);
+
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
-  spi_io_din <= spi_dat;
-  spi_io_ss <= spi_csn;
-  spi_io_clk <= spi_sclk;
+  process (clk)
+  begin
+    if rising_edge(clk) then
+      if pll_locked = '0' then
+        spi_ext <= '0';
+      elsif pmod_companion_ss = '0' then
+        spi_ext <= '1';
+      end if;
+    end if;
+  end process;
+
+  spi_io_din <= pmod_companion_din when spi_ext = '1' else spi_dat;
+  spi_io_ss <= pmod_companion_ss when spi_ext = '1' else spi_csn;
+  spi_io_clk <= pmod_companion_clk when spi_ext = '1' else spi_sclk;
   spi_dir <= spi_io_dout;
   spi_irqn <= spi_intn;
   pmod_companion_dout <= spi_io_dout;
@@ -521,7 +541,6 @@ mainclock: entity work.Gowin_PLL_ntsc_138k_MOD
       icpsel  => (others => '0'),
       lpfres  => (others => '0'),
       lpfcap  => (others => '0')
-  --  init_clk => clk_50mhz
     );
 
 div1_inst: CLKDIV
@@ -961,12 +980,12 @@ module_inst: entity work.sysctrl
   int_ack             => int_ack,
 
   buttons             => unsigned'(not key_user_n & not key_reset_n), -- S0 and S1 buttons
-  leds                => system_leds, -- two leds can be controlled from the MCU
+  leds                => open, -- two leds can be controlled from the MCU
   color               => ws2812_color -- a 24bit color to e.g. be used to drive the ws2812
 );
 
-sd_rd(4) <= '0';
-sd_wr(4 downto 0) <= "00000";
+sd_rd(7 downto 4) <= x"0";
+sd_wr(7 downto 0) <= x"00";
 
   crt_inst : entity work.loader_sd_card
   port map (
@@ -1146,14 +1165,14 @@ begin
    end if;
 end process;
 
-ram_inst: entity work.Gowin_SDP
+ram_inst: entity work.Gowin_SDPB
   port map (
       dout   => rom_do,
       adb    => rom_a,
       ceb    => '1',
       clkb   => clk_cpu,
       oce    => '1',
-      reset  => not pll_locked,
+      reset  => '0',
 
       clka   => clk,
       cea    => dl_wr,
