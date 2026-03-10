@@ -176,6 +176,7 @@ signal spi_ext        : std_logic :='0';
 signal spi_io_din     : std_logic;
 signal spi_io_ss      : std_logic;
 signal spi_io_clk     : std_logic;
+attribute syn_keep of spi_io_clk : signal is 1;
 signal spi_io_dout    : std_logic;
 signal system_wide_screen : std_logic;
 signal leds           : std_logic_vector(5 downto 0);
@@ -298,8 +299,7 @@ signal btn_diff_r       : std_logic;
 signal btn_pause        : std_logic;
 signal spi_intn         : std_logic;
 signal boot_button_detected : std_logic := '1';
-signal cnt              : std_logic_vector(31 downto 0):= x"05000000";
-signal cnt_run          : std_logic := '1';
+signal sys_jtagseln     : std_logic;
 
 component CLKDIV
     generic (
@@ -315,24 +315,10 @@ end component;
 
 begin
 
-  process (clk_50mhz)
-  begin
-    if rising_edge(clk_50mhz) then
-      if cnt_run = '1' then
-        if cnt = 0 then
-          cnt_run <= '0';
-        else
-          cnt <= cnt - 1;
-        end if;
-      end if;
-    end if;
-  end process;
-
-  boot_button_detected <= cnt_run when (key_user_n and key_reset_n) = '0' else '0';
-
   -- enable JTAG if any button has been pressed during boot and also once
   -- the external FPGA Companion has been seen
-  jtagseln <= not (spi_ext or boot_button_detected or bl616_jtagsel);
+  jtagseln <= not bl616_jtagsel; -- or spi_ext);
+  sys_jtagseln <= not (not pll_locked or bl616_jtagsel);
 
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
@@ -433,7 +419,7 @@ generic map (
     CLK_DIV  => 0
   )
     port map (
-    rstn            => pll_locked, 
+    rstn            => sys_jtagseln, 
     clk             => clk,
   
     -- SD card signals
@@ -876,7 +862,7 @@ end process;
 mcu_spi_inst: entity work.mcu_spi 
 port map (
   clk            => clk,
-  reset          => not jtagseln,
+  reset          => not sys_jtagseln,
   -- SPI interface to BL616 MCU
   spi_io_ss      => spi_io_ss,      -- SPI CSn
   spi_io_clk     => spi_io_clk,     -- SPI SCLK
@@ -942,7 +928,7 @@ module_inst: entity work.sysctrl
  port map 
  (
   clk                 => clk,
-  reset               => not jtagseln,
+  reset               => not sys_jtagseln,
 --
   data_in_strobe      => mcu_sys_strobe,
   data_in_start       => mcu_start,
