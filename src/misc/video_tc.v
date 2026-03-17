@@ -14,6 +14,7 @@ module video
           input    hb_in,
           input    vs_in_n,
           input    hs_in_n,
+          input    de_in,
 
           input [3:0]  r_in,
           input [3:0]  g_in,
@@ -34,7 +35,7 @@ module video
           // values that can be configure by the user via osd          
           input [1:0]  system_scanlines,
           input [1:0]  system_volume,
-          input        system_wide_screen,
+          input [1:0]  system_screen,
 
           // hdmi/tdms
           output   tmds_clk_n,
@@ -119,12 +120,16 @@ wire [15:0] audio_vol_r =
 
 wire vreset;
 reg  HSync, VSync, vbl_gen;
+wire [1:0] vmode;
 
 video_analyzer video_analyzer (
    .clk(clk),
    .vs(sd_vs_n),
    .hs(sd_hs_n),
-   .pal(),
+   .de(de_in),
+   .screen(system_screen),
+   .ntscmode(1'b1),
+   .mode(vmode),
    .vreset(vreset)
 );
 
@@ -272,7 +277,8 @@ hdmi #(
   .tmds_clock(tmds_clock),
 
   // video input
-  .pal_mode(1'b0),  // stay NTSC always
+  .stmode(vmode),    // current video mode PAL/NTSC/MONO
+  .screen(system_screen),
   .total_lines(total_lines),
   .reset(vreset),    // signal to synchronize HDMI
   // Atari STE outputs 4 bits per color. Scandoubler outputs 6 bits (to be

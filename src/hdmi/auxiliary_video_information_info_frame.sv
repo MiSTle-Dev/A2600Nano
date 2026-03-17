@@ -20,6 +20,7 @@ module auxiliary_video_information_info_frame
     parameter bit [3:0] PIXEL_REPETITION = 4'b0000 // None
 )
 (
+    input logic [1:0] stmode,
     input logic [7:0] cea,
     output logic [23:0] header,
     output logic [55:0] sub [3:0]

@@ -319,13 +319,21 @@ sc_a <= clr_a                                when rst = '1'    else
         "0000" & cpu_a(6 downto 0);
 
 -- ROM and SC output
-process(cpu_a, rom_do, sc_d_out, sc, bss, DpcFlags, DpcRandom, DpcMusicModes, DpcMusicFlags, soundAmplitudes, e7_bank0)
+process(all)
 	variable ampI_v :std_logic_vector(2 downto 0);
 	variable masked0_v :std_logic_vector(7 downto 0);
 	variable masked1_v :std_logic_vector(7 downto 0);
 	variable masked2_v :std_logic_vector(7 downto 0);
 	variable newlow_v : integer;
 begin
+	ampI_v    := (others => '0');
+	masked0_v := (others => '0');
+	masked1_v := (others => '0');
+	masked2_v := (others => '0');
+	newlow_v  := 0;
+
+	cpu_d <= (others => 'Z');
+
 	if (bss = BANKP2 and cpu_a >= "1" & x"008" and cpu_a <= "1" & x"00f")  then -- DPC READ - 0x1008 to 0x100f (read graphics from extra 2kb)
 		cpu_d <= rom_do;
 	elsif (bss = BANKP2 and cpu_a >= "1" & x"010" and cpu_a <= "1" & x"017")  then -- DPC READ - 0x1010 to 0x1017 (read graphics from extra 2kb ANDed)

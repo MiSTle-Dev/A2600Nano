@@ -10,8 +10,11 @@ module video_analyzer
  input		  clk,
  input		  hs,
  input		  vs,
- output reg   pal,          // pal mode detected
- output reg   vreset
+ input		  de,
+ input		  ntscmode,
+ input [1:0] screen,  // 0=std, 1=overscan, 2=wide
+ output reg[1:0] mode, // 0=ntsc, 1=pal, 2=unused
+ output reg	  vreset
 );
    
 
@@ -20,13 +23,23 @@ module video_analyzer
 reg vsD, hsD;
 reg [12:0] hcnt;    // signal ranges 0..2047
 reg [12:0] hcntL;
-reg [10:0] vcnt;    // signal ranges 0..625
-reg [10:0] vcntL;
+reg [9:0] vcnt;    // signal ranges 0..313
+reg [9:0] vcntL;
 reg changed;
+reg [1:0] screenL;   
+reg   pal;
 
 always @(posedge clk) begin
     // ---- hsync processing -----
     hsD <= hs;
+    mode <= {1'b0 , ~ntscmode}; // 0=ntsc, 1=pal, 2=unused
+
+    // make sure screen changes in std/overscan/wide also trigger
+    // a vreset
+    if(screen != screenL) begin
+       changed <= 1'b1;
+       screenL <= screen;
+    end
 
     // begin of hsync, falling edge
     if(!hs && hsD) begin
@@ -50,10 +63,10 @@ always @(posedge clk) begin
             // check if image height has changed during last cycle
             vcntL <= vcnt;
             if(vcntL != vcnt) begin
-                if(vcnt == 11'd524) begin
+                if(vcnt == 10'd524) begin
                     pal <= 1'b0; // NTSC
                 end
-                if(vcnt == 11'd624 ) begin
+                if(vcnt == 10'd624 ) begin
                     pal <= 1'b1; // PAL
                 end
                 changed <= 1'b1;
@@ -61,7 +74,7 @@ always @(posedge clk) begin
 
             vcnt <= 0;
         end else
-            vcnt <= vcnt + 11'd1;
+            vcnt <= vcnt + 10'd1;
     end
 
     // the reset signal is sent to the HDMI generator. On reset the
@@ -69,10 +82,11 @@ always @(posedge clk) begin
     // area
    
    vreset <= 1'b0;
-   // account for back porches to adjust image position within the
-   // HDMI frame
-   if( hcnt == 152 && vcnt == 28 && changed )
-       begin
+   // account for back porches to adjust image position within the HDMI frame
+   // mode 0 = ntsc, 1 = pal, 2 = unused
+   if( (hcnt == ((screen==2'd2)?10:(screen==2'd0)?80:28)  && vcnt == 20 && changed && mode == 2'd1) ||
+       (hcnt == ((screen==2'd2)?60:(screen==2'd0)?160:130) && vcnt == 28 && changed && mode == 2'd0) ) begin
+//  if( hcnt == 152 && vcnt == 28 && changed )
             vreset <= 1'b1;
             changed <= 1'b0;
         end

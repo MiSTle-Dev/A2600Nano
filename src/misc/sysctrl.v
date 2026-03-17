@@ -38,7 +38,7 @@ module sysctrl (
   output reg [1:0]  system_reset,
   output reg [1:0]  system_scanlines,
   output reg [1:0]  system_volume,
-  output reg        system_wide_screen,
+  output reg [1:0]  system_screen,
   output reg [3:0]  system_port_1,
   output reg [3:0]  system_port_2,
   output reg [1:0]  system_video_std,
@@ -113,7 +113,7 @@ always @(posedge clk) begin
       // will very likely override these early
       system_scanlines <= 2'b00;
       system_volume <= 2'b10;
-      system_wide_screen <= 1'b0;
+      system_screen <= 2'b00;
       system_port_1 <= 4'b0000;
       system_port_2 <= 4'b0000;
       system_video_std <= 1'b0;
@@ -236,7 +236,7 @@ always @(posedge clk) begin
                     // Value "A": volume mute(0), 33%(1), 66%(2) or 100%(3)
                     if(id == "A") system_volume <= data_in[1:0];
                     // Value "W": normal 4:3 screen (0), wide 16:9 screen (1)
-                    if(id == "W") system_wide_screen <= data_in[0];
+                    if(id == "W") system_screen <= data_in[1:0];
                 end
             end
 

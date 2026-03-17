@@ -181,7 +181,7 @@ signal spi_io_din     : std_logic;
 signal spi_io_ss      : std_logic;
 signal spi_io_clk     : std_logic;
 signal spi_io_dout    : std_logic;
-signal system_wide_screen : std_logic;
+signal system_screen  : std_logic_vector(1 downto 0);
 signal leds           : std_logic_vector(5 downto 0);
 signal system_leds    : std_logic_vector(1 downto 0);
 signal db9_joy        : std_logic_vector(5 downto 0);
@@ -487,6 +487,7 @@ port map(
       hb_in     => hblank,
       hs_in_n   => not hsync,
       vs_in_n   => not vsync,
+      de_in     => '0',
 
       r_in      => video_r(7 downto 4),
       g_in      => video_g(7 downto 4),
@@ -501,7 +502,7 @@ port map(
       mcu_data  => mcu_data_out,
 
       -- values that can be configure by the user via osd
-      system_wide_screen => system_wide_screen,
+      system_screen => system_screen,
       system_scanlines => system_scanlines,
       system_volume => system_volume,
 
@@ -952,7 +953,7 @@ module_inst: entity work.sysctrl
   system_reset        => system_reset,
   system_scanlines    => system_scanlines,
   system_volume       => system_volume,
-  system_wide_screen  => system_wide_screen,
+  system_screen       => system_screen,
   system_port_1       => port_1_sel,
   system_port_2       => port_2_sel,
   system_paddle       => paddle_inv,
