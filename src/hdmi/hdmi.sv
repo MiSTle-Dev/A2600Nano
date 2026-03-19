@@ -37,7 +37,7 @@ module hdmi
     input logic			      clk_pixel,
     input logic			      clk_audio,
     // synchronous reset back to 0,0
-    input logic [8:0] total_lines,
+    input logic [8:0]         total_lines,
     input logic			      reset,
     input logic [1:0]		  stmode, // atari st video mode, 0=60hz ntsc, 1=50hz pal, 2=mono
     input logic [1:0]		  screen,   // try to adopt to wide (4:3) screens
@@ -92,16 +92,14 @@ wire [91:0] timing =
 // demux timing parameters, in wide mode make the display wider, so the
 // area actually being used by the ST takes up a smaller fraction of the
 // whole width
-wire [10:0] wide_extra_width  = (screen==2'd2)?11'd80:11'd0;
-
+wire [10:0] wide_extra_width  = (screen==2'd2)?11'd32:11'd0;  // 80
 wire [10:0] frame_width       = timing[91:81];
 wire [10:0] screen_width_real = timing[80:70];   
 wire [10:0] screen_width      = timing[80:70] + wide_extra_width;
 wire [10:0] hsync_pulse_start = timing[69:59];
 wire [10:0] hsync_pulse_size  = timing[58:48];
 
-//wire [9:0] frame_height       = timing[47:38];
-wire [9:0] frame_height      = {1'b0, total_lines,1'b0};
+wire [9:0] frame_height       = {total_lines,1'b0}; // timing[47:38];
 wire [9:0] screen_height      = timing[37:28];
 wire [9:0] vsync_pulse_start  = timing[27:18];
 wire [9:0] vsync_pulse_size   = timing[17: 8];

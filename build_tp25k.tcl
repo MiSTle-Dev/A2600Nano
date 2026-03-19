@@ -52,7 +52,7 @@ set_option -verilog_std sysv2017
 set_option -vhdl_std vhd2008
 set_option -top_module A2600_top
 set_option -use_mspi_as_gpio 1
-set_option -use_sspi_as_gpio 1
+#set_option -use_sspi_as_gpio 1
 set_option -use_done_as_gpio 1
 set_option -use_cpu_as_gpio 1
 set_option -use_i2c_as_gpio 1

@@ -59,14 +59,28 @@ set_option -use_done_as_gpio 1
 set_option -use_cpu_as_gpio 1
 set_option -use_ready_as_gpio 1
 set_option -use_jtag_as_gpio 1
+set_option -use_mode_as_gpio 0
+set_option -use_i2c_as_gpio 0
 set_option -print_all_synthesis_warning 1
 set_option -show_all_warn 0
 set_option -rw_check_on_ram 0
 set_option -user_code 00000001
 set_option -bit_security 0
 set_option -rpt_auto_place_io_info 1
-set_option -bit_compress 1
+set_option -bit_compress 0
 set_option -loading_rate 70.000
+set_option -co-place_io_registers 0
+set_option -bit_incl_bsram_init 1
+set_option -ireg_in_iob 1
+set_option -oreg_in_iob 1
+set_option -ioreg_in_iob 1
+set_option -replicate_resources 0
+set_option -show_init_in_vo 0
+
+#set_option -mspi_jump 1
+#set_option -mspijump_address_width 24
+#set_option -mspijump_mode quad
+#set_option -merge_jumpbit 1
 
 #run syn
 run all

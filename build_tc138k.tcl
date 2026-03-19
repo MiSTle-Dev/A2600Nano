@@ -73,7 +73,7 @@ set_option -bit_incl_bsram_init 1
 set_option -ireg_in_iob 1
 set_option -oreg_in_iob 1
 set_option -ioreg_in_iob 1
-set_option -replicate_resources 1
+set_option -replicate_resources 0
 set_option -show_init_in_vo 0
 
 #set_option -mspi_jump 1

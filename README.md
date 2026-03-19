@@ -22,7 +22,7 @@ All HID, SDcard and µC firmware by [Till Harbaum](http://www.harbaum.org/till/m
 
 Features:
 
-* PAL 768x576p or NTSC 768x480p HDMI Video and Audio Output
+* NTSC 720x480p HDMI Video and Audio Output
 * TFT-LCD module 800x600 [SH500Q01Z](https://dl.sipeed.com/Accessories/LCD/500Q01Z-00%20spec.pdf) + Speaker support
 * Scanline length auto adjust
 * Cartridge type autodetect

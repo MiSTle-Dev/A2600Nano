@@ -21,13 +21,12 @@ module video_analyzer
 // generate a reset signal in the upper left corner of active video used
 // to synchonize the HDMI video generation to the Atari ST
 reg vsD, hsD;
-reg [12:0] hcnt;    // signal ranges 0..2047
-reg [12:0] hcntL;
+reg [11:0] hcnt;    // signal ranges 0..2047
+reg [11:0] hcntL;
 reg [9:0] vcnt;    // signal ranges 0..313
 reg [9:0] vcntL;
 reg changed;
-reg [1:0] screenL;   
-reg   pal;
+reg [1:0] screenL;
 
 always @(posedge clk) begin
     // ---- hsync processing -----
@@ -50,7 +49,7 @@ always @(posedge clk) begin
 
         hcnt <= 0;
     end else
-        hcnt <= hcnt + 13'd1;
+        hcnt <= hcnt + 12'd1;
 
 // A2600 262*2 > 524 312*2 > 624
 // 100% standard compatible NTSC games display 262 lines per frame at 60Hz
@@ -63,12 +62,6 @@ always @(posedge clk) begin
             // check if image height has changed during last cycle
             vcntL <= vcnt;
             if(vcntL != vcnt) begin
-                if(vcnt == 10'd524) begin
-                    pal <= 1'b0; // NTSC
-                end
-                if(vcnt == 10'd624 ) begin
-                    pal <= 1'b1; // PAL
-                end
                 changed <= 1'b1;
             end
 
@@ -85,12 +78,11 @@ always @(posedge clk) begin
    // account for back porches to adjust image position within the HDMI frame
    // mode 0 = ntsc, 1 = pal, 2 = unused
    if( (hcnt == ((screen==2'd2)?10:(screen==2'd0)?80:28)  && vcnt == 20 && changed && mode == 2'd1) ||
-       (hcnt == ((screen==2'd2)?60:(screen==2'd0)?160:130) && vcnt == 28 && changed && mode == 2'd0) ) begin
-//  if( hcnt == 152 && vcnt == 28 && changed )
+       (hcnt == ((screen==2'd2)?80:(screen==2'd0)?160:100) && vcnt == 28 && changed && mode == 2'd0) ) begin
             vreset <= 1'b1;
             changed <= 1'b0;
         end
 end
-      //  https://www.ataricompendium.com/faq/vcs_scanlines.html
+      // https://www.ataricompendium.com/faq/vcs_scanlines.html
 
 endmodule

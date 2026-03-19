@@ -1,6 +1,6 @@
 {
  "BACKGROUND_PROGRAMMING" : "off",
- "COMPRESS" : true,
+ "COMPRESS" : false,
  "CPU" : false,
  "CRC_CHECK" : true,
  "Clock_Route_Order" : 0,
@@ -8,7 +8,7 @@
  "Convert_SDP32_36_to_SDP16_18" : true,
  "Correct_Hold_Violation" : true,
  "DONE" : false,
- "DOWNLOAD_SPEED" : "default",
+ "DOWNLOAD_SPEED" : "250/6",
  "Disable_Insert_Pad" : false,
  "ENABLE_CTP" : false,
  "ENABLE_MERGE_MODE" : false,

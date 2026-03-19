@@ -441,6 +441,7 @@ vb_in     => vblank,
 hb_in     => hblank,
 hs_in_n   => not hsync,
 vs_in_n   => not vsync,
+de_in     => '1',
 
 r_in      => video_r(7 downto 4),
 g_in      => video_g(7 downto 4),

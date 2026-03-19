@@ -17,9 +17,9 @@ add_file src/misc/hid.v
 add_file src/misc/mcu_spi.v
 add_file src/misc/osd_u8g2.v
 add_file src/misc/scandoubler.v
-add_file src/misc/sd_card.v
-add_file src/misc/sd_rw.v
-add_file src/misc/sdcmd_ctrl.v
+add_file src/tang/nano9k/sd_card.v
+add_file src/tang/nano9k/sd_rw.v
+add_file src/tang/nano9k/sdcmd_ctrl.v
 add_file src/misc/sysctrl.v
 add_file src/misc/video.v
 add_file src/misc/video_analyzer.v
@@ -54,7 +54,7 @@ set_option -use_sspi_as_gpio 1
 set_option -print_all_synthesis_warning 1
 set_option -rw_check_on_ram 0
 set_option -user_code 00000001
-set_option -bit_compress 1
+set_option -bit_compress 0
 set_option -multi_boot 0
 set_option -mspi_jump 0
 
