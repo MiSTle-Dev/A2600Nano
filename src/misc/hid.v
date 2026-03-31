@@ -193,8 +193,10 @@ always @(posedge clk) begin
                 end
                 if(state == 4'd4) begin
                         if(device == 8'd0) extra_button0 <= data_in;
-                        if(device == 8'd1) extra_button1 <= data_in;
-                        joystick_strobe <= 1'b1;
+                        if(device == 8'd1) begin
+                            extra_button1 <= data_in;
+                            joystick_strobe <= 1'b1;
+                        end
                 end
             end
 
