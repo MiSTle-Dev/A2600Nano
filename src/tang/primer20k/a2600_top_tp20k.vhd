@@ -12,7 +12,6 @@ use IEEE.numeric_std.ALL;
 entity A2600_top is
   port
   (
---  reconfig_n  : out std_logic; 
     clk_27mhz   : in std_logic; -- 27 Mhz XO
     reset       : in std_logic; -- S2 button
     user        : in std_logic; -- S1 button
@@ -471,7 +470,7 @@ video_inst: entity work.video
         STEREO  => true
       )
 port map(
-      pll_lock => pll_locked, 
+      pll_lock => pll_locked and not system_reset(1),
       clk      => clk,
       clk_pixel_x5 => clk_pixel_x5,
       ntscmode => '1',
