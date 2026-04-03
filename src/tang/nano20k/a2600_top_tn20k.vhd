@@ -14,7 +14,6 @@ entity A2600_top is
   (
     --bl616_jtagsel : in std_logic;
     --jtagseln    : out std_logic := '0';
-    reconfign   : out std_logic := 'Z';
     clk_27mhz   : in std_logic; -- 27 Mhz XO
     key_reset : in std_logic; -- S2 button
     key_user  : in std_logic; -- S1 button
@@ -344,7 +343,6 @@ end component;
 
 begin
 
-  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
   -- BL616 console to hw pins for external USB-UART adapter
   bl616_mon_tx <= uart_rx;
 
@@ -491,7 +489,7 @@ generic map (
 
 video_inst: entity work.video 
 port map(
-      pll_lock     => pll_locked, 
+      pll_lock     => pll_locked and not system_reset(1),
       clk          => clk,
       clk_pixel_x5 => clk_pixel_x5,
 

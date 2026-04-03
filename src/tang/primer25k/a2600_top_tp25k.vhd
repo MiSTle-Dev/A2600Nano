@@ -15,7 +15,6 @@ entity A2600_top is
   (
     bl616_jtagsel : in std_logic;
     jtagseln    : out std_logic;
-    reconfign   : out std_logic := 'Z';
     clk_50mhz   : in std_logic; -- 27 Mhz XO
     key_reset   : in std_logic; -- S2 button high active
     key_user    : in std_logic; -- S1 button high active
@@ -259,7 +258,6 @@ begin
 -- enable JTAG if any button has been pressed during boot and also once
 -- the external FPGA Companion has been seen
   jtagseln <= '1' when (not pll_locked or boot_button_detected or spi_ext or bl616_jtagsel) = '0' else '0';
-  reconfign <= 'Z';  -- <= '0' when bl616_RECONFIGn = '0' else 'Z';
 
   process (clk)
   begin
@@ -326,7 +324,7 @@ generic map (
 
 video_inst: entity work.video 
 port map(
-      pll_lock     => pll_locked, 
+      pll_lock     => pll_locked and not system_reset(1),
       clk          => clk,
       clk_pixel_x5 => clk_pixel_x5,
 

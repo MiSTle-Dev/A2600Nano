@@ -486,7 +486,7 @@ generic map
   STEREO  => false
 )
 port map(
-      pll_lock     => pll_locked, 
+      pll_lock     => pll_locked and not system_reset(1),
       clk          => clk,
       clk_pixel_x5 => clk_pixel_x5,
       ntscmode  => '1',
