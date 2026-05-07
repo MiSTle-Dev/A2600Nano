@@ -466,8 +466,8 @@ joyDS2A_p2      <= x"0000";
 joyDigital      <= x"0000";
 -- Logitech Rumble Pad 2
 joyUsb1    <= "0000" &
-              extra_button0(5) & -- BTN_START
-              extra_button0(4) & -- BTN_SELECT
+              extra_button0(3) & -- BTN_START
+              extra_button0(2) & -- BTN_SELECT
               extra_button0(1) & -- BTN_SR
               extra_button0(0) & -- BTN_SL
               joystick0(4) &     -- BTN_Y
@@ -479,8 +479,8 @@ joyUsb1    <= "0000" &
               joystick0(1) &     -- BTN_LEFT
               joystick0(0);      -- BTN_RIGHT
 joyUsb2    <= "0000" &
-              extra_button1(5) & -- BTN_START
-              extra_button1(4) & -- BTN_SELECT
+              extra_button1(3) & -- BTN_START
+              extra_button1(2) & -- BTN_SELECT
               extra_button1(1) & -- BTN_SR
               extra_button1(0) & -- BTN_SL
               joystick1(4) &     -- BTN_Y
@@ -492,8 +492,8 @@ joyUsb2    <= "0000" &
               joystick1(1) &     -- BTN_LEFT
               joystick1(0);      -- BTN_RIGHT
 joyUsb1A   <= "0000" &
-              extra_button0(5) & -- BTN_START
-              extra_button0(4) & -- BTN_SELECT
+              extra_button0(3) & -- BTN_START
+              extra_button0(2) & -- BTN_SELECT
               extra_button0(1) & -- BTN_SR
               extra_button0(0) & -- BTN_SL
               joystick0(4) &     -- BTN_Y
@@ -501,8 +501,8 @@ joyUsb1A   <= "0000" &
               "00" &             -- BTN B + A
               "0000";            -- DPad
 joyUsb2A   <= "0000" &
-              extra_button1(5) & -- BTN_START
-              extra_button1(4) & -- BTN_SELECT
+              extra_button1(3) & -- BTN_START
+              extra_button1(2) & -- BTN_SELECT
               extra_button1(1) & -- BTN_SR
               extra_button1(0) & -- BTN_SL
               joystick1(4) &     -- BTN_Y
